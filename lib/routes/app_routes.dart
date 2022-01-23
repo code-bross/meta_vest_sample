@@ -1,20 +1,8 @@
 part of './app_pages.dart';
 
-enum Routes { ROOT, HOME, FEED, SEARCH, RANKING }
-
-extension RotuesExtensions on Routes {
-  String get path {
-    switch (this) {
-      case Routes.ROOT:
-        return "/";
-      case Routes.HOME:
-        return "/home";
-      case Routes.FEED:
-        return "/feed";
-      case Routes.SEARCH:
-        return "/search";
-      case Routes.RANKING:
-        return "/ranking";
-    }
-  }
+abstract class Routes{
+  static const String Home = '/home';
+  static const String Feed = '/feed';
+  static const String Search = '/search';
+  static const String Ranking = '/ranking';
 }

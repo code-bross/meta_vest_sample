@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:lotto_checker/core/lang/locale_keys.g.dart';
 
 import 'search_controller.dart';
 

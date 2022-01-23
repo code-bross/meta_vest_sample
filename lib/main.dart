@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 
-//import 'package:easy_localization_loader/easy_localization_loader.dart'; // import custom loaders
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lotto_checker/pages/root/root_page.dart';
-
+import 'package:meta_vest_sample/pages/home/home_page.dart';
+import 'package:meta_vest_sample/routes/app_pages.dart';
 import 'core/lang/locale_keys.g.dart';
 
 void main() async {
@@ -12,24 +11,26 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   runApp(EasyLocalization(
-    child: MyApp(),
+    child: const MyApp(),
     supportedLocales: const [Locale('en')],
     path: 'resources/langs',
   ));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const RootPage(),
-    );
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: Routes.Home,
+        getPages: AppPages.pages,
+        debugShowCheckedModeBanner: false);
   }
 }
-
