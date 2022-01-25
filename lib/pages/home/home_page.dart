@@ -15,7 +15,6 @@ class HomePage extends StatelessWidget {
     var pages = AppPages.pages.map((e) => e.page);
     var feedPage = pages.elementAt(1);
     var rankingPage = pages.elementAt(2);
-
     List<Widget> tabs = <Widget>[feedPage() , rankingPage()];
 
     List<BottomNavigationBarItem> _bottomItems = <BottomNavigationBarItem>[
