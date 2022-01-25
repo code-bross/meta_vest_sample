@@ -2,9 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta_vest_sample/core/lang/locale_keys.g.dart';
-import 'package:meta_vest_sample/pages/feed/feed_page.dart';
-import 'package:meta_vest_sample/pages/ranking/ranking_page.dart';
-import 'package:meta_vest_sample/pages/search/search_page.dart';
 import 'package:meta_vest_sample/routes/app_pages.dart';
 
 import 'home_controller.dart';
@@ -15,7 +12,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<Widget> tabs = <Widget>[FeedPage(), RankingPage()];
+    var pages = AppPages.pages.map((e) => e.page);
+    var feedPage = pages.elementAt(1);
+    var rankingPage = pages.elementAt(2);
+
+    List<Widget> tabs = <Widget>[feedPage() , rankingPage()];
 
     List<BottomNavigationBarItem> _bottomItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
