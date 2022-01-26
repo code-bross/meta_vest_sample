@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:meta_vest_sample/dummy/DummyTypes.dart';
 import 'package:meta_vest_sample/pages/feed/feed_controller.dart';
 
 class FeedPage extends StatelessWidget {
@@ -31,61 +32,99 @@ class Feed extends StatelessWidget {
       padding: EdgeInsets.only(top: 16),
       child: Column(
         children: [
-          Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Row(
-                children: [
-                  Text('계좌에 봄날이 올까',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16)),
-                  Padding(
-                      padding: EdgeInsets.only(left: 16),
-                      child: Text(
-                        '5분전',
-                        style: TextStyle(fontSize: 12),
-                      ))
-                ],
-              )),
+          _Header(),
           Row(
             children: [
               Image.network(
-                'https://pbs.twimg.com/media/EGL70oUVAAAwhzz.png',
+                DummyType().getMimojiUrl(),
                 width: 120,
                 height: 120,
               ),
-              Column(
-                children: [
-                  Text(
-                    '#달걀파동 #양계업 #농장대표',
-                    style: TextStyle(fontSize: 14, color: Colors.blueAccent),
-                    textAlign: TextAlign.start,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(top: 8),
-                      child: Text(
-                        '특란 1알에 150원대 가격이 농장을 ',
-                        style: TextStyle(fontSize: 14, color: Colors.black),
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                        softWrap: true,
-                      )),
-                  Padding(
-                      padding: EdgeInsets.only(top: 8),
-                      child: Text(
-                        '@풀무원 매도 150주 (2022/01/17 인증)',
-                        style:
-                            TextStyle(fontSize: 14, color: Colors.blueAccent),
-                        textAlign: TextAlign.start,
-                      ))
-                ],
-              )
+              _ThirdText()
             ],
           )
         ],
       ),
     ));
   }
+}
+
+class _Header extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.only(left: 16),
+        child: Row(
+          children: [
+            Text( DummyType().name(),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16)),
+            Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  DummyType().getTime(),
+                  style: TextStyle(fontSize: 12),
+                ))
+          ],
+        ));
+  }
+}
+
+class _ThirdText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(children: [
+          Flexible(child: _Tag()),
+          Flexible(child: _Tag()),
+          Flexible(child: _Tag())
+        ]),
+        Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Text(
+              DummyType().getContent(),
+              style: TextStyle(fontSize: 14, color: Colors.black),
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              softWrap: true,
+            )),
+        Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Text(
+              DummyType().transaction(),
+              style: TextStyle(fontSize: 14, color: Colors.blueAccent),
+              textAlign: TextAlign.start,
+            ))
+      ],
+    ));
+  }
+}
+
+class _Tag extends StatelessWidget {
+  var _style = TextStyle(fontSize: 14, color: Colors.blueAccent);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(DummyType().hashTag(),
+        maxLines: 1,
+        style: _style, textAlign: TextAlign.start);
+  }
+}
+
+class _Model {
+  final String name;
+  final DateTime time;
+  final List<String> tags;
+  final String content;
+  final String description;
+  final String imageUrl;
+
+  _Model(this.name, this.time, this.tags, this.content, this.description,
+      this.imageUrl);
 }

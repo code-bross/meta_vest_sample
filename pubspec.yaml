@@ -42,6 +42,9 @@ dependencies:
   shimmer:
   rxdart:
   freezed_annotation:
+  faker_dart:
+  faker:
+  jiffy:
 
 dev_dependencies:
   flutter_test:

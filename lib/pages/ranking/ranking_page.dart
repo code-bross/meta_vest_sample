@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:meta_vest_sample/dummy/DummyTypes.dart';
 import 'package:meta_vest_sample/pages/ranking/ranking_controller.dart';
 
 class RankingPage extends StatelessWidget {
@@ -103,7 +104,7 @@ class _Avatar extends StatelessWidget {
                 width: 150,
                 height: 150,
                 child: Image.network(
-                  'https://pbs.twimg.com/media/EGL70oUVAAAwhzz.png',
+                  DummyType().getMimojiUrl(),
                   width: 120,
                   height: 120,
                 ),
