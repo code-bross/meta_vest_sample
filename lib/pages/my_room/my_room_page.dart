@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meta_vest_sample/dummy/DummyTypes.dart';
 
 class MyRoomPage extends StatelessWidget {
   const MyRoomPage({Key? key}) : super(key: key);
@@ -43,7 +44,8 @@ class _Header extends StatelessWidget {
 class _PairedText extends StatelessWidget {
   var firstTextStyle = TextStyle(fontSize: 12, color: Colors.grey);
 
-  var secondTextStyle = TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold);
+  var secondTextStyle =
+      TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,7 @@ class _Avatar extends StatelessWidget {
                 width: 150,
                 height: 150,
                 child: Image.network(
-                  'https://pbs.twimg.com/media/EGL70oUVAAAwhzz.png',
+                  DummyType().getMimojiUrl(),
                   width: 120,
                   height: 120,
                 ),

@@ -13,7 +13,7 @@ class FeedPage extends StatelessWidget {
         builder: (controller) => Scaffold(
                 body: ListView.separated(
               shrinkWrap: true,
-              itemCount: 20,
+              itemCount: 200,
               itemBuilder: (BuildContext context, int index) {
                 return Feed();
               },
