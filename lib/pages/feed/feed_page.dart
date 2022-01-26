@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:meta_vest_sample/pages/feed/feed_controller.dart';
-import 'package:meta_vest_sample/routes/app_pages.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -11,13 +10,12 @@ class FeedPage extends StatelessWidget {
   Widget build(context) {
     return GetBuilder<FeedController>(
         builder: (controller) => Scaffold(
-            body: Scrollbar(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 20,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Feed();
-                    }))));
+            body: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 20,
+                itemBuilder: (BuildContext context, int index) {
+                  return Feed();
+                })));
   }
 }
 

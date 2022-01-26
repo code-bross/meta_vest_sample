@@ -30,12 +30,6 @@ class RankingController extends GetxController {
   void _updateValue(List<ApiResponse> newList) {
     list.clear();
     list.addAll(newList);
-
-    print('-------update-----');
-    list.forEach((element) {
-      print('${element}');
-    });
-
     update();
   }
 }
