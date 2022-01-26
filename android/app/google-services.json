@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "623284890758",
+    "project_id": "meta-vest-sample",
+    "storage_bucket": "meta-vest-sample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623284890758:android:fd240f333d95438f0cf507",
+        "android_client_info": {
+          "package_name": "com.shinhan.ai.meta_vest_sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623284890758-k52hf6kpcuafll9qn5jcp00robgo8v4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwX6iSS_KNyxzkeUpwOvhlfB8Jdg78h5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623284890758-k52hf6kpcuafll9qn5jcp00robgo8v4j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "623284890758-d9q9k1vt76p1vrv0drrf4rcp547h334v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shinhan.ai.meta.vest.sample"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta_vest_sample/core/lang/locale_keys.g.dart';
-import 'package:meta_vest_sample/routes/app_pages.dart';
+import 'package:meta_vest_sample/pages/feed/feed_page.dart';
+import 'package:meta_vest_sample/pages/my_room/my_room_page.dart';
+import 'package:meta_vest_sample/pages/ranking/ranking_page.dart';
 
 import 'home_controller.dart';
 
@@ -12,16 +14,17 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pages = AppPages.pages.map((e) => e.page);
-    var feedPage = pages.elementAt(1);
-    var rankingPage = pages.elementAt(2);
-    List<Widget> tabs = <Widget>[feedPage() , rankingPage()];
+    List<Widget> tabs = <Widget>[FeedPage() , RankingPage(), MyRoomPage()];
 
     List<BottomNavigationBarItem> _bottomItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
           icon: const Icon(Icons.home), label: tr(LocaleKeys.home)),
       BottomNavigationBarItem(
-          icon: const Icon(Icons.emoji_events), label: tr(LocaleKeys.ranking)),
+          icon: const Icon(Icons.emoji_events), label: tr(LocaleKeys.ranking),
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.person), label: tr(LocaleKeys.my_room),
+      ),
     ];
 
     PreferredSizeWidget _appBar = AppBar(

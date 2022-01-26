@@ -1,0 +1,1 @@
+keytool -genkey -v -keystore ./upload-keystore.jks -keyalg RSA -keysize 2048 -validity 9999 -alias meta_vest -storetype JKS

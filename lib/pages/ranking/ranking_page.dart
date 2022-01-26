@@ -20,7 +20,7 @@ class RankingPage extends StatelessWidget {
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
+              itemCount: 50,
               itemBuilder: (BuildContext context, int index) {
                 return _Chracter();
               }))

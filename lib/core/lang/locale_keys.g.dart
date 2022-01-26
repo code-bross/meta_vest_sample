@@ -6,5 +6,6 @@ abstract class  LocaleKeys {
   static const search = 'search';
   static const feed = 'feed';
   static const ranking = 'ranking';
+  static const my_room = 'my_room';
 
 }

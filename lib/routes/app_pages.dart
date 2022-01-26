@@ -3,6 +3,8 @@ import 'package:meta_vest_sample/pages/feed/feed_binding.dart';
 import 'package:meta_vest_sample/pages/feed/feed_page.dart';
 import 'package:meta_vest_sample/pages/home/home_binding.dart';
 import 'package:meta_vest_sample/pages/home/home_page.dart';
+import 'package:meta_vest_sample/pages/my_room/my_room_binding.dart';
+import 'package:meta_vest_sample/pages/my_room/my_room_page.dart';
 import 'package:meta_vest_sample/pages/ranking/ranking_binding.dart';
 import 'package:meta_vest_sample/pages/ranking/ranking_page.dart';
 
@@ -18,10 +20,10 @@ class AppPages {
     GetPage(
         name: Routes.Ranking,
         page: () => const RankingPage(),
-        binding: RankingBinding())
-    // GetPage(
-    //     name: Routes.DETAILS.path,
-    //     page: () => DetailsPage(),
-    //     binding: DetailsBinding()),
+        binding: RankingBinding()),
+    GetPage(
+        name: Routes.MyRoom,
+        page: () => MyRoomPage(),
+        binding: MyRoomBinding()),
   ];
 }
