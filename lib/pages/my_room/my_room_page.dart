@@ -1,7 +1,9 @@
 import 'package:darq/darq.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:meta_vest_sample/core/lang/locale_keys.g.dart';
 import 'package:meta_vest_sample/data/view/model/my_room_model.dart';
 import 'package:meta_vest_sample/pages/feed/feed_page.dart';
 import 'package:meta_vest_sample/pages/my_room/my_room_controller.dart';
@@ -58,9 +60,9 @@ class _Header extends StatelessWidget {
           _Avatar(_model),
           Column(
             children: [
-              _PairedText(Tuple2('ID', _model.id)),
-              _PairedText(Tuple2('팔로워', _model.followCountString())),
-              _PairedText(Tuple2('팔로잉', _model.followingCountString())),
+              _PairedText(Tuple2(tr(LocaleKeys.id), _model.id)),
+              _PairedText(Tuple2(tr(LocaleKeys.follower), _model.followCountString())),
+              _PairedText(Tuple2(tr(LocaleKeys.following), _model.followingCountString())),
             ],
           )
         ])
@@ -171,7 +173,7 @@ class _AliasSection extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '획득한 칭호',
+                tr(LocaleKeys.get_badges),
                 style: _textStyle,
               ),
               alignment: Alignment.topLeft,
@@ -215,7 +217,7 @@ class _InterestSection extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '관심 지표',
+                tr(LocaleKeys.interest_indicator),
                 style: _textStyle,
               ),
               alignment: Alignment.topLeft,
@@ -258,10 +260,10 @@ class _TabSection extends StatelessWidget {
         isScrollable: true,
         tabs: <Widget>[
           Tab(
-            text: "분석",
+            text: tr(LocaleKeys.analysis),
           ),
           Tab(
-            text: "포스트",
+            text: tr(LocaleKeys.post),
           ),
         ],
       ));

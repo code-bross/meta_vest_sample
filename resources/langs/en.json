@@ -4,5 +4,15 @@
   "search": "검색",
   "feed": "피드",
   "ranking": "랭킹",
-  "my_room": "마이룸"
+  "my_room": "마이룸",
+  "follower": "팔로워",
+  "following": "팔로잉",
+  "id": "ID",
+  "earning_rate": "수익률",
+  "port_polio_subscriber_increase": "포트폴리오 구독자수 증가",
+  "follower_increase": "팔로워수 증가",
+  "interest_indicator": "관심 지표",
+  "get_badges": "획득한 칭호",
+  "post": "포스트",
+  "analysis": "분석"
 }

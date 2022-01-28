@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meta_vest_sample/core/lang/locale_keys.g.dart';
 import 'package:meta_vest_sample/data/view/model/feed_model.dart';
 import 'package:meta_vest_sample/data/view/model/my_room_model.dart';
 import 'package:meta_vest_sample/dummy/DummyTypes.dart';
-import 'package:meta_vest_sample/pages/feed/feed_page.dart';
 
 class MyRoomController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -48,7 +49,7 @@ class MyRoomController extends GetxController
 
   void updatOwn(){
     item = item.copyWith(
-      title: '마이룸'
+      title: tr(LocaleKeys.my_room)
     );
 
     _feedList = _feedList.map((e) => e.copyWith(

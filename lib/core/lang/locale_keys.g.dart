@@ -7,5 +7,15 @@ abstract class  LocaleKeys {
   static const feed = 'feed';
   static const ranking = 'ranking';
   static const my_room = 'my_room';
+  static const follower = 'follower';
+  static const following = 'following';
+  static const id = 'id';
+  static const earning_rate = 'earning_rate';
+  static const port_polio_subscriber_increase = 'port_polio_subscriber_increase';
+  static const follower_increase = 'follower_increase';
+  static const interest_indicator = 'interest_indicator';
+  static const get_badges = 'get_badges';
+  static const post = 'post';
+  static const analysis = 'analysis';
 
 }
