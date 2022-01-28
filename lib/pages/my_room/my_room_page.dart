@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:meta_vest_sample/data/view/model/my_room_model.dart';
+import 'package:meta_vest_sample/pages/feed/feed_page.dart';
 import 'package:meta_vest_sample/pages/my_room/my_room_controller.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -242,11 +243,15 @@ class _TabSection extends StatelessWidget {
 
   _TabSection(this.controller);
 
-  TabBar _tabBar() => TabBar(
+  Widget _tabBar() => Align(
+      alignment: Alignment.center,
+      child: TabBar(
         controller: controller.tabController,
         indicatorColor: Colors.teal,
+        indicatorWeight: 1,
         labelColor: Colors.teal,
         unselectedLabelColor: Colors.black54,
+        indicatorSize: TabBarIndicatorSize.tab,
         isScrollable: true,
         tabs: <Widget>[
           Tab(
@@ -256,25 +261,18 @@ class _TabSection extends StatelessWidget {
             text: "포스트",
           ),
         ],
-      );
+      ));
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            _tabBar(),
-            SizedBox(
-              height: 400,
-              child: getBody(controller.tabController.index),
-            ),
-            SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                    onPressed: _onPressed, child: Text('AI 알고리즘 도우미')))
-          ],
-        ));
+    return Column(
+      children: [
+        _tabBar(),
+        Container(
+          child: getBody(),
+        ),
+      ],
+    );
   }
 
   void _onPressed() {}
@@ -284,7 +282,33 @@ class _TabSection extends StatelessWidget {
       chartValuesOptions:
           ChartValuesOptions(showChartValuesInPercentage: true));
 
-  Widget getBody(int index) {
-    return SizedBox(height: 300, child: _pieChart());
+  Widget getBody() {
+    switch (controller.selectTabIndex) {
+      case 0:
+        return Column(children: [
+          SizedBox(height: 300, child: _pieChart()),
+          Padding(
+              padding: EdgeInsets.all(24),
+              child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: _onPressed, child: Text('AI 알고리즘 도우미'))))
+        ]);
+      case 1:
+        return Container(
+            child: ListView.separated(
+          physics: const ClampingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: controller.feedList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Feed(controller.feedList[index]);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return const Divider();
+          },
+        ));
+      default:
+        return Text('');
+    }
   }
 }

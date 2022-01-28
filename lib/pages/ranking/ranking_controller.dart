@@ -12,8 +12,6 @@ class RankingController extends GetxController {
 
   Map<String, List<RankingModel>> get items{
     _items ??= _generateItems();
-    print('print items');
-    print(_items);
     return _items ?? _generateItems();
   }
 
