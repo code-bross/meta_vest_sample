@@ -13,6 +13,9 @@ class MyRoomPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyRoomController>(builder: (controller) {
+      if(Get.parameters['profile'] ==null ){
+        controller.updatOwn();
+      }
       return Scaffold(
         body: SingleChildScrollView(
             child: Column(

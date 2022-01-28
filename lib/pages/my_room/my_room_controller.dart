@@ -45,4 +45,17 @@ class MyRoomController extends GetxController
     selectTabIndex = index;
     update();
   }
+
+  void updatOwn(){
+    item = item.copyWith(
+      title: '마이룸'
+    );
+
+    _feedList = _feedList.map((e) => e.copyWith(
+      imageUrl: item.profileImageUrl,
+      name: item.id
+    )).toList();
+
+    update();
+  }
 }
