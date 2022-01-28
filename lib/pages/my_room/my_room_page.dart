@@ -132,11 +132,15 @@ class _Avatar extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Row(
                   children: [
-                    CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        foregroundImage:
-                            NetworkImage(_model.selectAliasImageUrl)),
+                    SizedBox(
+                      width: 25,
+                      height: 25,
+                      child: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          foregroundImage:
+                              NetworkImage(_model.selectAliasImageUrl)),
+                    ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
@@ -192,9 +196,11 @@ class _AliasSection extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 8),
                           child: CircleAvatar(
                               radius: 20,
-                              backgroundColor: Colors.white,
-                              foregroundImage:
-                                  NetworkImage(_model.aliasImageUrls[index])));
+                              backgroundColor: Colors.black87,
+                              child: CircleAvatar(
+                                  radius: 19,
+                                  foregroundImage: NetworkImage(
+                                      _model.aliasImageUrls[index]))));
                     }))
           ],
         ));
