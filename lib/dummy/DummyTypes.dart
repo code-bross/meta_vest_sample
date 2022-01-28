@@ -38,16 +38,16 @@ class DummyGenerate<T> {
  */
   FeedModel _getFeedModel() {
     return FeedModel(
-      _fakeType.name(),
-      _fakeType.time(),
-      [
+      name: _fakeType.name(),
+      time: _fakeType.time(),
+      tags: [
         _fakeType.companyName(),
         _fakeType.companyName(),
         _fakeType.companyName()
       ],
-      _fakeType.getContent(),
-      _fakeType.transaction(),
-      _fakeType.getMimojiUrl(),
+      content: _fakeType.getContent(),
+      transaction: _fakeType.transaction(),
+      imageUrl: _fakeType.getMimojiUrl(),
     );
   }
 
@@ -62,39 +62,49 @@ class DummyGenerate<T> {
    */
   RankingModel _getRankingModel(int rank) {
     return RankingModel(
-        rank, _fakeType.rate(), _fakeType.rate(), _fakeType.getMimojiUrl());
+        rank: rank,
+        earningRate: _fakeType.rate(),
+        sharpeRate: _fakeType.rate(),
+        imageUrl: _fakeType.getMimojiUrl());
   }
 
   List<RankingModel> _getRankingModelList() =>
       Iterable.generate(100).map((i) => _getRankingModel(i + 1)).toList();
 
   /*
-    final String title;
-    final String id;
-    final String followCount;
-    final String followingCount;
-    final String selectAliasName;
-    final String selectAliasImageUrl;
-    final List<String> aliasImageUrls;
-    final List<String> interestIndicators;
-    final MyRoomAnalyticsModel myRoomAnalyticsModel;
+      final String title;
+      final String id;
+      final int followCount;
+      final int followingCount;
+      final String selectAliasName;
+      final String selectAliasImageUrl;
+      final String profileImageUrl;
+      final List<String> aliasImageUrls;
+      final List<String> interestIndicators;
+      final MyRoomAnalyticsModel myRoomAnalyticsModel;
    */
 
   MyRoomModel _getMyRoomModel() => MyRoomModel(
-      _fakeType.name(),
-      _fakeType.name(),
-      _fakeType.number(),
-      _fakeType.number(),
-      _fakeType.name(),
-      _fakeType.getBadgeImageUrl(),
-      _fakeType.getMimojiUrl(),
-      Iterable.generate(10).map((e) => _fakeType.getBadgeImageUrl()).toList(),
-      Iterable.generate(10).map((e) => _fakeType.companyName()).toList(),
-      MyRoomAnalyticsModel(_getMyInvested()));
+      title: _fakeType.name(),
+      id: _fakeType.name(),
+      followCount: _fakeType.number(),
+      followingCount: _fakeType.number(),
+      selectAliasName: _fakeType.name(),
+      selectAliasImageUrl: _fakeType.getBadgeImageUrl(),
+      profileImageUrl: _fakeType.getMimojiUrl(),
+      aliasImageUrls: Iterable.generate(10)
+          .map((e) => _fakeType.getBadgeImageUrl())
+          .toList(),
+      interestIndicators:
+          Iterable.generate(10).map((e) => _fakeType.companyName()).toList(),
+      myRoomAnalyticsModel:
+          MyRoomAnalyticsModel(investedInfoMap: _getMyInvested()));
 
-  List<String> _getCompanies() => Iterable.generate(10).map((e) => _fakeType.companyName()).toList();
-  Map<String, double> _getMyInvested() =>
-      Map.fromIterable(_getCompanies(), key: (key) => key, value: (_) => _fakeType.number().toDouble());
+  List<String> _getCompanies() =>
+      Iterable.generate(10).map((e) => _fakeType.companyName()).toList();
+
+  Map<String, double> _getMyInvested() => Map.fromIterable(_getCompanies(),
+      key: (key) => key, value: (_) => _fakeType.number().toDouble());
 }
 
 class _FakeType {
@@ -177,6 +187,4 @@ class _FakeType {
   double rate() => _legacyFaker.randomGenerator.decimal(min: -10, scale: 100);
 
   int number() => Random.secure().nextInt(1000);
-
 }
-

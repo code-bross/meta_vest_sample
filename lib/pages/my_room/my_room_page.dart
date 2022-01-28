@@ -219,7 +219,7 @@ class _InterestSection extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             SizedBox(
-                height: 80,
+                height: 16,
                 child: ListView.builder(
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
@@ -275,18 +275,39 @@ class _TabSection extends StatelessWidget {
     );
   }
 
-  void _onPressed() {}
+  void _onPressed() {
+    Get.showSnackbar(
+        GetSnackBar(message: '구현되어있지 않습니다.', duration: Duration(seconds: 1)));
+  }
 
   PieChart _pieChart() => PieChart(
       dataMap: controller.item.myRoomAnalyticsModel.investedInfoMap,
-      chartValuesOptions:
-          ChartValuesOptions(showChartValuesInPercentage: true));
+      colorList: const [
+        Colors.redAccent,
+        Colors.lightGreen,
+        Colors.lightBlue,
+        Colors.lime,
+        Colors.orange,
+        Colors.purple,
+        Colors.pink,
+        Colors.amber,
+        Colors.brown,
+        Colors.cyan,
+      ],
+      chartValuesOptions: ChartValuesOptions(
+          showChartValuesInPercentage: true,
+          chartValueBackgroundColor: Colors.transparent,
+          chartValueStyle: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          )));
 
   Widget getBody() {
     switch (controller.selectTabIndex) {
       case 0:
         return Column(children: [
-          SizedBox(height: 300, child: _pieChart()),
+          _pieChart(),
           Padding(
               padding: EdgeInsets.all(24),
               child: SizedBox(
