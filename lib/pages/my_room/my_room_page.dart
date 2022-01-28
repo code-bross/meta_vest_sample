@@ -1,38 +1,62 @@
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:meta_vest_sample/dummy/DummyTypes.dart';
+import 'package:get/get.dart';
+import 'package:meta_vest_sample/data/view/model/my_room_model.dart';
+import 'package:meta_vest_sample/pages/my_room/my_room_controller.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class MyRoomPage extends StatelessWidget {
   const MyRoomPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _Header(),
-    );
+    return GetBuilder<MyRoomController>(builder: (controller) {
+      return Scaffold(
+        body: SingleChildScrollView(
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _Header(controller.item),
+            _AliasSection(controller.item),
+            _InterestSection(controller.item),
+            _TabSection(controller)
+          ],
+        )),
+      );
+    });
   }
 }
 
 class _Header extends StatelessWidget {
+  final MyRoomModel _model;
+
+  const _Header(this._model);
+
+  final _textStyle = const TextStyle(
+      fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold);
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          child: Text(
-            'My Room',
-            style: TextStyle(
-                fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold),
+          child: Padding(
+            child: Text(
+              _model.title,
+              style: _textStyle,
+            ),
+            padding: const EdgeInsets.all(16),
           ),
           alignment: Alignment.topLeft,
         ),
         Row(children: [
-          _Avatar(),
+          _Avatar(_model),
           Column(
             children: [
-              _PairedText(),
-              _PairedText(),
-              _PairedText(),
+              _PairedText(Tuple2('ID', _model.id)),
+              _PairedText(Tuple2('팔로워', _model.followCountString())),
+              _PairedText(Tuple2('팔로잉', _model.followingCountString())),
             ],
           )
         ])
@@ -42,31 +66,41 @@ class _Header extends StatelessWidget {
 }
 
 class _PairedText extends StatelessWidget {
-  var firstTextStyle = TextStyle(fontSize: 12, color: Colors.grey);
+  var firstTextStyle = const TextStyle(fontSize: 12, color: Colors.grey);
+  var secondTextStyle = const TextStyle(
+      fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold);
 
-  var secondTextStyle =
-      TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold);
+  final Tuple2<String, String> _tuple;
+
+  _PairedText(this._tuple);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(top: 12),
-        child: Row(children: [
-          Padding(
-              padding: EdgeInsets.only(right: 24),
-              child: Text(
-                'ID',
-                style: firstTextStyle,
-              )),
-          Text(
-            '계좌에 봄날이 올까',
-            style: secondTextStyle,
-          )
-        ]));
+        child: Container(
+            alignment: Alignment.topLeft,
+            child: Row(children: [
+              Padding(
+                  padding: EdgeInsets.only(right: 24),
+                  child: Text(
+                    _tuple.item0,
+                    style: firstTextStyle,
+                    textAlign: TextAlign.start,
+                  )),
+              Text(
+                _tuple.item1,
+                style: secondTextStyle,
+              )
+            ])));
   }
 }
 
 class _Avatar extends StatelessWidget {
+  final MyRoomModel _model;
+
+  _Avatar(this._model);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -76,11 +110,11 @@ class _Avatar extends StatelessWidget {
           height: 150,
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 width: 150,
                 height: 150,
                 child: Image.network(
-                  DummyType().getMimojiUrl(),
+                  _model.profileImageUrl,
                   width: 120,
                   height: 120,
                 ),
@@ -93,18 +127,18 @@ class _Avatar extends StatelessWidget {
                     CircleAvatar(
                         radius: 20,
                         backgroundColor: Colors.white,
-                        foregroundImage: NetworkImage(
-                            'https://cdn-icons-png.flaticon.com/512/22/22791.png')),
+                        foregroundImage:
+                            NetworkImage(_model.selectAliasImageUrl)),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
                         color: Colors.purple,
                         child: Padding(
                           child: Text(
-                            '테크덕후',
-                            style: TextStyle(color: Colors.white),
+                            _model.selectAliasName,
+                            style: const TextStyle(color: Colors.white),
                           ),
-                          padding: EdgeInsets.all(4),
+                          padding: const EdgeInsets.all(4),
                         ),
                       ),
                     )
@@ -114,5 +148,143 @@ class _Avatar extends StatelessWidget {
             ],
           ),
         ));
+  }
+}
+
+class _AliasSection extends StatelessWidget {
+  final MyRoomModel _model;
+
+  _AliasSection(this._model);
+
+  final _textStyle = const TextStyle(
+      fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Container(
+              child: Text(
+                '획득한 칭호',
+                style: _textStyle,
+              ),
+              alignment: Alignment.topLeft,
+            ),
+            SizedBox(
+                height: 80,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _model.aliasImageUrls.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.white,
+                              foregroundImage:
+                                  NetworkImage(_model.aliasImageUrls[index])));
+                    }))
+          ],
+        ));
+  }
+}
+
+class _InterestSection extends StatelessWidget {
+  final MyRoomModel _model;
+
+  _InterestSection(this._model);
+
+  final _textStyle = const TextStyle(
+      fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold);
+  final _tagTextStyle = const TextStyle(
+      fontSize: 14, color: Colors.grey, fontWeight: FontWeight.bold);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Container(
+              child: Text(
+                '관심 지표',
+                style: _textStyle,
+              ),
+              alignment: Alignment.topLeft,
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+                height: 80,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _model.interestIndicators.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Text(
+                            '#${_model.interestIndicators[index]}',
+                            style: _tagTextStyle,
+                          ));
+                    }))
+          ],
+        ));
+  }
+}
+
+class _TabSection extends StatelessWidget {
+  final MyRoomController controller;
+
+  _TabSection(this.controller);
+
+  TabBar _tabBar() => TabBar(
+        controller: controller.tabController,
+        indicatorColor: Colors.teal,
+        labelColor: Colors.teal,
+        unselectedLabelColor: Colors.black54,
+        isScrollable: true,
+        tabs: <Widget>[
+          Tab(
+            text: "분석",
+          ),
+          Tab(
+            text: "포스트",
+          ),
+        ],
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            _tabBar(),
+            SizedBox(
+              height: 400,
+              child: getBody(controller.tabController.index),
+            ),
+            SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: _onPressed, child: Text('AI 알고리즘 도우미')))
+          ],
+        ));
+  }
+
+  void _onPressed() {}
+
+  PieChart _pieChart() => PieChart(
+      dataMap: controller.item.myRoomAnalyticsModel.investedInfoMap,
+      chartValuesOptions:
+          ChartValuesOptions(showChartValuesInPercentage: true));
+
+  Widget getBody(int index) {
+    return SizedBox(height: 300, child: _pieChart());
   }
 }

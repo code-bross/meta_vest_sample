@@ -12,7 +12,10 @@ part './app_routes.dart';
 
 class AppPages {
   static final pages = [
-    GetPage(name: Routes.Home, page: () => const HomePage(), binding: HomeBinding()),
+    GetPage(
+        name: Routes.Home,
+        page: () => const HomePage(),
+        binding: HomeBinding()),
     GetPage(
         name: Routes.Feed,
         page: () => const FeedPage(),
@@ -23,7 +26,7 @@ class AppPages {
         binding: RankingBinding()),
     GetPage(
         name: Routes.MyRoom,
-        page: () => MyRoomPage(),
+        page: () => const MyRoomPage(),
         binding: MyRoomBinding()),
   ];
 }

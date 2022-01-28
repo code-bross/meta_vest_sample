@@ -2,35 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:meta_vest_sample/dummy/DummyTypes.dart';
+import 'package:meta_vest_sample/data/view/model/ranking_model.dart';
 import 'package:meta_vest_sample/pages/ranking/ranking_controller.dart';
 
 class RankingPage extends StatelessWidget {
   const RankingPage({Key? key}) : super(key: key);
 
-  List<int> range(start, end) {
-    return [for (var i = start; i < end; i += 1) i];
-  }
-
-  Widget _widget() {
+  Widget _widget(MapEntry<String,List<RankingModel>> item) {
     return Column(children: [
-      _Header(),
+      _Header(item.key),
       SizedBox(
           height: 200,
           child: ListView.builder(
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: 50,
+              itemCount: item.value.length,
               itemBuilder: (BuildContext context, int index) {
-                return _Chracter();
+                return _Chracter(item.value[index]);
               }))
     ]);
   }
 
-  List<Widget> _widgets() {
-    return range(0, 10).map((e) => Container(child: _widget(),
-      padding: EdgeInsets.all(10),
+  List<Widget> _widgets(RankingController controller) {
+    return controller.items.entries.map((item) => Container(child: _widget(item),
+      padding: const EdgeInsets.all(10),
     )).toList();
   }
 
@@ -42,7 +38,7 @@ class RankingPage extends StatelessWidget {
             body: SingleChildScrollView(
                 child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: _widgets(),
+          children: _widgets(controller),
         )));
       },
     );
@@ -50,6 +46,9 @@ class RankingPage extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
+  final String _text;
+  _Header(this._text);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -57,7 +56,7 @@ class _Header extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(right: 20),
             child: Text(
-              '수익률',
+              _text,
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,
@@ -91,6 +90,10 @@ class _Header extends StatelessWidget {
 }
 
 class _Avatar extends StatelessWidget {
+
+  final RankingModel _model;
+  _Avatar(this._model);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -104,7 +107,7 @@ class _Avatar extends StatelessWidget {
                 width: 150,
                 height: 150,
                 child: Image.network(
-                  DummyType().getMimojiUrl(),
+                  _model.imageUrl,
                   width: 120,
                   height: 120,
                 ),
@@ -113,7 +116,7 @@ class _Avatar extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  '1',
+                  '${_model.rank}',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               )
@@ -124,6 +127,10 @@ class _Avatar extends StatelessWidget {
 }
 
 class _Bottom extends StatelessWidget {
+
+  final RankingModel _model;
+  _Bottom(this._model);
+
   var plusStyle =
       TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 13);
 
@@ -138,14 +145,14 @@ class _Bottom extends StatelessWidget {
           children: [
             Icon(Icons.show_chart),
             Text('수익률'),
-            Text('+19.72%', style: plusStyle),
+            Text(_model.earningRateString(), style: plusStyle),
           ],
         ),
         Row(
           children: [
             Icon(Icons.stacked_line_chart),
             Text('샤프지수'),
-            Text('+19.72%', style: minusStyle),
+            Text(_model.sharpeRateString(), style: minusStyle),
           ],
         )
       ],
@@ -154,15 +161,17 @@ class _Bottom extends StatelessWidget {
 }
 
 class _Chracter extends StatelessWidget {
+  final RankingModel _model;
+  _Chracter(this._model);
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          child: _Avatar(),
+          child: _Avatar(_model),
           alignment: Alignment.topLeft,
         ),
-        _Bottom()
+        _Bottom(_model)
       ],
     );
   }

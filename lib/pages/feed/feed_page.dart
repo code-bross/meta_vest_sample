@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:meta_vest_sample/dummy/DummyTypes.dart';
+import 'package:meta_vest_sample/data/view/model/feed_model.dart';
 import 'package:meta_vest_sample/pages/feed/feed_controller.dart';
 
 class FeedPage extends StatelessWidget {
@@ -13,18 +13,22 @@ class FeedPage extends StatelessWidget {
         builder: (controller) => Scaffold(
                 body: ListView.separated(
               shrinkWrap: true,
-              itemCount: 200,
+              itemCount: controller.items.length,
               itemBuilder: (BuildContext context, int index) {
-                return Feed();
+                return Feed(controller.items[index]);
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Divider();
+                return const Divider();
               },
             )));
   }
 }
 
 class Feed extends StatelessWidget {
+  final FeedModel _model;
+
+  Feed(this._model);
+
   @override
   Widget build(context) {
     return Container(
@@ -32,15 +36,15 @@ class Feed extends StatelessWidget {
       padding: EdgeInsets.only(top: 16),
       child: Column(
         children: [
-          _Header(),
+          _Header(_model),
           Row(
             children: [
               Image.network(
-                DummyType().getMimojiUrl(),
+                _model.imageUrl,
                 width: 120,
                 height: 120,
               ),
-              _ThirdText()
+              _ContentText(_model)
             ],
           )
         ],
@@ -50,13 +54,17 @@ class Feed extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
+  final FeedModel _model;
+
+  _Header(this._model);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(left: 16),
         child: Row(
           children: [
-            Text( DummyType().name(),
+            Text(_model.name,
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -64,7 +72,7 @@ class _Header extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.only(left: 16),
                 child: Text(
-                  DummyType().getTime(),
+                  _model.getDateString(),
                   style: TextStyle(fontSize: 12),
                 ))
           ],
@@ -72,22 +80,29 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _ThirdText extends StatelessWidget {
+class _ContentText extends StatelessWidget {
+  final FeedModel _model;
+
+  _ContentText(this._model);
+
+  Widget _getTag(String text) {
+    return Flexible(child: _Tag(text));
+  }
+
+  List<Widget> _getTagList() =>
+      _model.tags.map((text) => _getTag(text)).toList();
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(children: [
-          Flexible(child: _Tag()),
-          Flexible(child: _Tag()),
-          Flexible(child: _Tag())
-        ]),
+        Row(children: _getTagList()),
         Padding(
             padding: EdgeInsets.only(top: 8),
             child: Text(
-              DummyType().getContent(),
+              _model.content,
               style: TextStyle(fontSize: 14, color: Colors.black),
               textAlign: TextAlign.start,
               overflow: TextOverflow.ellipsis,
@@ -97,7 +112,7 @@ class _ThirdText extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(top: 8),
             child: Text(
-              DummyType().transaction(),
+              _model.transaction,
               style: TextStyle(fontSize: 14, color: Colors.blueAccent),
               textAlign: TextAlign.start,
             ))
@@ -107,24 +122,13 @@ class _ThirdText extends StatelessWidget {
 }
 
 class _Tag extends StatelessWidget {
-  var _style = TextStyle(fontSize: 14, color: Colors.blueAccent);
+  final String _text;
+  _Tag(this._text);
+
+  final _style = TextStyle(fontSize: 14, color: Colors.blueAccent);
 
   @override
   Widget build(BuildContext context) {
-    return Text(DummyType().hashTag(),
-        maxLines: 1,
-        style: _style, textAlign: TextAlign.start);
+    return Text(_text, maxLines: 1, style: _style, textAlign: TextAlign.start);
   }
-}
-
-class _Model {
-  final String name;
-  final DateTime time;
-  final List<String> tags;
-  final String content;
-  final String description;
-  final String imageUrl;
-
-  _Model(this.name, this.time, this.tags, this.content, this.description,
-      this.imageUrl);
 }
