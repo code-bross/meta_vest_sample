@@ -15,7 +15,7 @@ class MyRoomPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyRoomController>(builder: (controller) {
-      if(Get.parameters['profile'] ==null ){
+      if (Get.parameters['profile'] == null) {
         controller.updatOwn();
       }
       return Scaffold(
@@ -61,8 +61,10 @@ class _Header extends StatelessWidget {
           Column(
             children: [
               _PairedText(Tuple2(tr(LocaleKeys.id), _model.id)),
-              _PairedText(Tuple2(tr(LocaleKeys.follower), _model.followCountString())),
-              _PairedText(Tuple2(tr(LocaleKeys.following), _model.followingCountString())),
+              _PairedText(
+                  Tuple2(tr(LocaleKeys.follower), _model.followCountString())),
+              _PairedText(Tuple2(
+                  tr(LocaleKeys.following), _model.followingCountString())),
             ],
           )
         ])
@@ -318,7 +320,8 @@ class _TabSection extends StatelessWidget {
               child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: _onPressed, child: Text('AI 알고리즘 도우미'))))
+                      onPressed: _onPressed,
+                      child: Text(tr(LocaleKeys.ai_algorithm_assistants)))))
         ]);
       case 1:
         return Container(
