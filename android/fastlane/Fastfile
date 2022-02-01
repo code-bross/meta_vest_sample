@@ -34,7 +34,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do |options|
-    gradle(task: "clean")
+#     gradle(task: "clean")
     sh('flutter build apk --release')
     firebase_app_distribution(
                     app: options[:firebase_app_id],
