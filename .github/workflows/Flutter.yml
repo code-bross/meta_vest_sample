@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.2.1
         with:
@@ -25,9 +26,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
       - name: Build APK
-        run: |
-          cd android
-          bundle exec fastlane deploy firebase_app_id:${{ secrets.FIREBASE_APP_ID }} firebase_cli_token:${{ secrets.FIREBASE_DISTRIBUTION_UPLOAD_KEY }}
+        uses: maierj/fastlane-action@v2.0.1
+        with:
+          lane: 'deploy'
+          subdirectory: 'android'
+          options: '{ "firebase_app_id": ${{ secrets.FIREBASE_APP_ID }}, "firebase_cli_token": ${{ secrets.FIREBASE_DISTRIBUTION_UPLOAD_KEY }} }'
+        run: fastlane deploy
       - name: Rename APK
         run: mv build/app/outputs/flutter-apk/app-release.apk ./Meta-Vest-Sample-SNAPSHOT.apk
       - name: Archive APK
