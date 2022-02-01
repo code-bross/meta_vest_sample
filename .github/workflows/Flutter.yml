@@ -20,6 +20,8 @@ jobs:
         with:
           fileName: upload-keystore.jks
           encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      - name : move keystore
+        run: mv upload-keystore.jks ./android
       - name: Create key.properties
         run: echo "${{ secrets.KEY_PROPERTIES }}" > android/key.properties
       - name: Install dependencies
