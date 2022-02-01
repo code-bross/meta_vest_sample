@@ -18,12 +18,10 @@ jobs:
         id: android_keystore
         uses: timheuer/base64-to-file@v1.0.3
         with:
-          fileName: upload-keystore.jks
+          fileName: 'android/upload-keystore.jks'
           encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-      - name : ls
-        run : ls
-      - name : move keystore
-        run: mv upload-keystore.jks ./android
+      - name : ls android
+        run: ls android
       - name: Create key.properties
         run: echo "${{ secrets.KEY_PROPERTIES }}" > android/key.properties
       - name: Install dependencies
