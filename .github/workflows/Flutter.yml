@@ -26,8 +26,6 @@ jobs:
           echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
-      - name: Added key path
-        run: echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
       - name: Install dependencies
         run: flutter pub get
       - name: Build APK
@@ -43,15 +41,15 @@ jobs:
         with:
           name: android-build
           path: ./Meta-Vest-Sample-SNAPSHOT.apk
-  build_ios:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1.4.0
-        with:
-          channel: 'stable'
-      - name: Install dependencies
-        run: flutter pub get
-      - name: Build IOS
-        run: flutter build ios --release --no-codesign
+#  build_ios:
+#    runs-on: macos-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Set up Flutter
+#        uses: subosito/flutter-action@v1.4.0
+#        with:
+#          channel: 'stable'
+#      - name: Install dependencies
+#        run: flutter pub get
+#      - name: Build IOS
+#        run: flutter build ios --release --no-codesign
