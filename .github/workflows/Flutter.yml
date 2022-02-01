@@ -18,12 +18,12 @@ jobs:
         id: android_keystore
         uses: timheuer/base64-to-file@v1.0.3
         with:
-          fileName: 'android/upload-keystore.jks'
+          fileName: 'key.jks'
           encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-      - name : ls android
-        run: ls android
       - name: Create key.properties
         run: echo "${{ secrets.KEY_PROPERTIES }}" > android/key.properties
+      - name: Added key path
+        run: echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
       - name: Install dependencies
         run: flutter pub get
       - name: Build APK
