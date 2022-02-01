@@ -29,7 +29,7 @@ jobs:
         with:
           lane: 'deploy'
           subdirectory: 'android'
-          options: '{ "firebase_app_id": ${{ secrets.FIREBASE_APP_ID }}, "firebase_cli_token": ${{ secrets.FIREBASE_DISTRIBUTION_UPLOAD_KEY }} }'
+          options: '{ "firebase_app_id": "${{ secrets.FIREBASE_APP_ID }}", "firebase_cli_token": "${{ secrets.FIREBASE_DISTRIBUTION_UPLOAD_KEY }}" }'
       - name: Rename APK
         run: mv build/app/outputs/flutter-apk/app-release.apk ./Meta-Vest-Sample-SNAPSHOT.apk
       - name: Archive APK
