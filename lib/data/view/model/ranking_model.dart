@@ -3,6 +3,7 @@ class RankingModel {
   final double earningRate;
   final double sharpeRate;
   final String imageUrl;
+  final Map<String, double> investedInfoMap;
 
 //<editor-fold desc="Data Methods">
 
@@ -11,6 +12,7 @@ class RankingModel {
     required this.earningRate,
     required this.sharpeRate,
     required this.imageUrl,
+    required this.investedInfoMap,
   });
 
   @override
@@ -21,14 +23,16 @@ class RankingModel {
           rank == other.rank &&
           earningRate == other.earningRate &&
           sharpeRate == other.sharpeRate &&
-          imageUrl == other.imageUrl);
+          imageUrl == other.imageUrl &&
+          investedInfoMap == other.investedInfoMap);
 
   @override
   int get hashCode =>
       rank.hashCode ^
       earningRate.hashCode ^
       sharpeRate.hashCode ^
-      imageUrl.hashCode;
+      imageUrl.hashCode ^
+      investedInfoMap.hashCode;
 
   @override
   String toString() {
@@ -37,6 +41,7 @@ class RankingModel {
         ' earningRate: $earningRate,' +
         ' sharpeRate: $sharpeRate,' +
         ' imageUrl: $imageUrl,' +
+        ' investedInfoMap: $investedInfoMap,' +
         '}';
   }
 
@@ -45,12 +50,14 @@ class RankingModel {
     double? earningRate,
     double? sharpeRate,
     String? imageUrl,
+    Map<String, double>? investedInfoMap,
   }) {
     return RankingModel(
       rank: rank ?? this.rank,
       earningRate: earningRate ?? this.earningRate,
       sharpeRate: sharpeRate ?? this.sharpeRate,
       imageUrl: imageUrl ?? this.imageUrl,
+      investedInfoMap: investedInfoMap ?? this.investedInfoMap,
     );
   }
 
@@ -60,6 +67,7 @@ class RankingModel {
       'earningRate': this.earningRate,
       'sharpeRate': this.sharpeRate,
       'imageUrl': this.imageUrl,
+      'investedInfoMap': this.investedInfoMap,
     };
   }
 
@@ -69,6 +77,7 @@ class RankingModel {
       earningRate: map['earningRate'] as double,
       sharpeRate: map['sharpeRate'] as double,
       imageUrl: map['imageUrl'] as String,
+      investedInfoMap: map['investedInfoMap'] as Map<String, double>,
     );
   }
 

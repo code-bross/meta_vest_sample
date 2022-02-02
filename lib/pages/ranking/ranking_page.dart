@@ -4,13 +4,15 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:meta_vest_sample/data/view/model/ranking_model.dart';
 import 'package:meta_vest_sample/pages/ranking/ranking_controller.dart';
+import 'package:meta_vest_sample/pages/ranking/ranking_type.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class RankingPage extends StatelessWidget {
   const RankingPage({Key? key}) : super(key: key);
 
-  Widget _widget(MapEntry<String,List<RankingModel>> item) {
+  Widget _widget(MapEntry<RankingType, List<RankingModel>> item) {
     return Column(children: [
-      _Header(item.key),
+      _Header(item.key.name()),
       SizedBox(
           height: 200,
           child: ListView.builder(
@@ -19,15 +21,26 @@ class RankingPage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: item.value.length,
               itemBuilder: (BuildContext context, int index) {
-                return _Chracter(item.value[index]);
+                return _content(item.key, item.value[index]);
               }))
     ]);
   }
 
+  Widget _content(RankingType type, RankingModel model) {
+    if (type == RankingType.PortpolioSubsribeCount) {
+      return _Chart(model);
+    } else {
+      return _Chracter(model);
+    }
+  }
+
   List<Widget> _widgets(RankingController controller) {
-    return controller.items.entries.map((item) => Container(child: _widget(item),
-      padding: const EdgeInsets.all(10),
-    )).toList();
+    return controller.items.entries
+        .map((item) => Container(
+              child: _widget(item),
+              padding: const EdgeInsets.all(10),
+            ))
+        .toList();
   }
 
   @override
@@ -47,6 +60,7 @@ class RankingPage extends StatelessWidget {
 
 class _Header extends StatelessWidget {
   final String _text;
+
   _Header(this._text);
 
   @override
@@ -90,8 +104,8 @@ class _Header extends StatelessWidget {
 }
 
 class _Avatar extends StatelessWidget {
-
   final RankingModel _model;
+
   _Avatar(this._model);
 
   @override
@@ -126,10 +140,92 @@ class _Avatar extends StatelessWidget {
   }
 }
 
-class _Bottom extends StatelessWidget {
-
+class _Chart extends StatelessWidget {
   final RankingModel _model;
-  _Bottom(this._model);
+
+  _Chart(this._model);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 200,
+              height: 120,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: 160,
+                    height: 120,
+                    child: PieChart(
+                      dataMap: _model.investedInfoMap,
+                      chartValuesOptions: ChartValuesOptions(
+                        showChartValuesInPercentage: true,
+                        chartValueBackgroundColor: Colors.transparent,
+                        showChartValuesOutside: false,
+                      ),
+                      legendOptions: LegendOptions(
+                          showLegendsInRow: false, showLegends: false),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      '${_model.rank}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    ),
+                  )
+                ],
+              ),
+            )),
+        _ChartBottom(_model)
+      ],
+    );
+  }
+}
+
+class _ChartBottom extends StatelessWidget {
+  final RankingModel _model;
+
+  _ChartBottom(this._model);
+
+  var plusStyle =
+      TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 13);
+
+  var minusStyle =
+      TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 13);
+
+  Widget _tags() {
+    var text = _model.investedInfoMap.keys.map((e) => '#$e').join(' ');
+
+    return Text(text, overflow: TextOverflow.ellipsis, maxLines: 2,);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Icon(Icons.show_chart),
+            Text('수익률'),
+            Text(_model.earningRateString(), style: plusStyle),
+          ],
+        ),
+        SizedBox(width: 120, height: 35, child: _tags())
+      ],
+    );
+  }
+}
+
+class _CharacterBottom extends StatelessWidget {
+  final RankingModel _model;
+
+  _CharacterBottom(this._model);
 
   var plusStyle =
       TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 13);
@@ -162,7 +258,9 @@ class _Bottom extends StatelessWidget {
 
 class _Chracter extends StatelessWidget {
   final RankingModel _model;
+
   _Chracter(this._model);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -171,7 +269,7 @@ class _Chracter extends StatelessWidget {
           child: _Avatar(_model),
           alignment: Alignment.topLeft,
         ),
-        _Bottom(_model)
+        _CharacterBottom(_model)
       ],
     );
   }

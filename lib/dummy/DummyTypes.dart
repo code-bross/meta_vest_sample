@@ -3,9 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart' as LegacyFaker;
 import 'package:faker_dart/faker_dart.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:kt_dart/kt.dart';
 import 'package:meta_vest_sample/data/view/model/feed_model.dart';
 import 'package:meta_vest_sample/data/view/model/my_room_model.dart';
 import 'package:meta_vest_sample/data/view/model/ranking_model.dart';
+import 'package:faker_dart/src/utils/locale_utils.dart';
 
 class DummyGenerate<T> {
   final _fakeType = _FakeType._instnace;
@@ -65,7 +67,9 @@ class DummyGenerate<T> {
         rank: rank,
         earningRate: _fakeType.rate(),
         sharpeRate: _fakeType.rate(),
-        imageUrl: _fakeType.getMimojiUrl());
+        imageUrl: _fakeType.getMimojiUrl(),
+        investedInfoMap: _getMyInvested()
+    );
   }
 
   List<RankingModel> _getRankingModelList() =>
@@ -109,7 +113,6 @@ class DummyGenerate<T> {
 
 class _FakeType {
   static final _FakeType _instnace = _FakeType._internal();
-
   factory _FakeType() {
     return _instnace;
   }
@@ -117,7 +120,10 @@ class _FakeType {
   final _faker = Faker.instance;
   final _legacyFaker = LegacyFaker.Faker();
 
-  _FakeType._internal() {}
+  _FakeType._internal() {
+    Faker.instance.setLocale(FakerLocaleType.ko);
+    Jiffy.locale('ko');
+  }
 
   String getMimojiUrl() {
     List<String> urls = [
@@ -133,7 +139,6 @@ class _FakeType {
       'https://pbs.twimg.com/media/EGqRS4wUwAE3Or9.png',
       'https://pbs.twimg.com/media/EGL70oUVAAAwhzz.png',
       'https://pbs.twimg.com/media/EG6nsOzUUAAIAHR.png',
-      'https://pbs.twimg.com/media/E1o8XWvVUAAWaNY.png:small',
       'https://pbs.twimg.com/media/EYBX5Y4WkAYAz9F.png:small'
     ];
 
@@ -171,20 +176,16 @@ class _FakeType {
   String name() => _faker.name.firstName();
 
   String transaction() {
-    var companyName = _faker.company.companyName();
     var amount = '${_legacyFaker.randomGenerator.numbers(1000, 100).first}주';
     var randomDate = _legacyFaker.date.dateTime(
         minYear: DateTime.now().year - 1, maxYear: DateTime.now().year);
     var dateTime = '(${DateFormat('yyyy/MM/dd').format(randomDate)} 인증)';
-    return '@$companyName $amount $dateTime';
+    return '@${companyName()} $amount $dateTime';
   }
 
   DateTime time() => _legacyFaker.date
       .dateTime(minYear: DateTime.now().year - 1, maxYear: DateTime.now().year);
-
-  String companyName() => _faker.company.companyName();
-
+  String companyName() => _faker.company.let((e) => '${name()} ${e.companySuffix()}');
   double rate() => _legacyFaker.randomGenerator.decimal(min: -10, scale: 100);
-
   int number() => Random.secure().nextInt(1000);
 }

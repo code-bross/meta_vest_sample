@@ -327,7 +327,7 @@ class _TabSection extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                       onPressed: _onPressed,
-                      child: Text(tr(LocaleKeys.ai_algorithm_assistants)))))
+                      child: Text(tr(LocaleKeys.portfolio_subscribe)))))
         ]);
       case 1:
         return Container(

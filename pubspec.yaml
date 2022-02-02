@@ -47,6 +47,11 @@ dependencies:
   jiffy:
   darq:
   pie_chart:
+  translator:
+  dart_web3: ^0.0.3
+  flame: ^1.0.0
+  kt_dart: ^0.10.0
+#  alice: ^0.2.5
 
 dev_dependencies:
   flutter_test:

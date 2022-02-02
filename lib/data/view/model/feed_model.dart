@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:jiffy/jiffy.dart';
-
 class FeedModel {
   final String name;
   final DateTime time;
@@ -97,6 +96,7 @@ class FeedModel {
 }
 
 extension FeedModelExtension on FeedModel{
+  // String getDateString() => timeago.format(time, locale: 'en');
   String getDateString() => Jiffy(
       DateFormat('yyyy-MM-dd HH:mm').format(time), 'yyyy-MM-dd HH:mm')
       .fromNow();
