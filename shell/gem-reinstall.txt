@@ -1,0 +1,4 @@
+sudo gem list
+sudo gem uninstall cocoapods
+sudo gem uninstall cocoapods-core
+sudo gem install cocoapods

@@ -19,5 +19,6 @@ abstract class  LocaleKeys {
   static const analysis = 'analysis';
   static const ai_algorithm_assistants = 'ai_algorithm_assistants';
   static const portfolio_subscribe = 'portfolio_subscribe';
+  static const comment = 'comment';
 
 }

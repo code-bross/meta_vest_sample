@@ -6,6 +6,7 @@ import 'package:meta_vest_sample/pages/feed/feed_page.dart';
 import 'package:meta_vest_sample/pages/my_room/my_room_page.dart';
 import 'package:meta_vest_sample/pages/ranking/ranking_page.dart';
 
+import '../../routes/app_pages.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,7 +32,9 @@ class HomePage extends StatelessWidget {
         title: Text(tr(LocaleKeys.app_name)),
         leading: IconButton(
           icon: const Icon(Icons.insights),
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(Routes.DevelopSetting);
+          },
         ),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),

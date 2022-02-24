@@ -30,7 +30,6 @@ class MyRoomController extends GetxController
   @override
   void onInit() {
     tabController.addListener(() {
-      print(tabController.index);
       _updateTabIndex(tabController.index);
     });
     super.onInit();

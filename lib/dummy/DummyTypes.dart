@@ -4,13 +4,19 @@ import 'package:faker/faker.dart' as LegacyFaker;
 import 'package:faker_dart/faker_dart.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:kt_dart/kt.dart';
+import 'package:meta_vest_sample/data/view/model/comment_model.dart';
 import 'package:meta_vest_sample/data/view/model/feed_model.dart';
 import 'package:meta_vest_sample/data/view/model/my_room_model.dart';
 import 'package:meta_vest_sample/data/view/model/ranking_model.dart';
 import 'package:faker_dart/src/utils/locale_utils.dart';
+import 'package:meta_vest_sample/data/view/model/vote_model.dart';
 
 class DummyGenerate<T> {
   final _fakeType = _FakeType._instnace;
+
+  _FakeType get fakeType {
+    return _fakeType;
+  }
 
   dynamic get generate {
     switch (T) {
@@ -24,6 +30,12 @@ class DummyGenerate<T> {
         return _getRankingModelList();
       case MyRoomModel:
         return _getMyRoomModel();
+      case List<VoteModel>:
+        return _getVoteModelList();
+      case List<CommentModel>:
+        return _getCommentModelList();
+      case int:
+        return _fakeType.number();
     }
   }
 
@@ -68,12 +80,25 @@ class DummyGenerate<T> {
         earningRate: _fakeType.rate(),
         sharpeRate: _fakeType.rate(),
         imageUrl: _fakeType.getMimojiUrl(),
-        investedInfoMap: _getMyInvested()
-    );
+        investedInfoMap: _getMyInvested());
   }
 
   List<RankingModel> _getRankingModelList() =>
       Iterable.generate(100).map((i) => _getRankingModel(i + 1)).toList();
+
+  List<VoteModel> _getVoteModelList() {
+    return [
+      VoteModel(title: '상승', value: _fakeType.number().toDouble()),
+      VoteModel(title: '하락', value: _fakeType.number().toDouble()),
+    ];
+  }
+
+  List<CommentModel> _getCommentModelList() => Iterable.generate(100)
+      .map((i) => CommentModel(
+          name: _fakeType.name(),
+          content: _fakeType.getContent(),
+          imageUrl: _fakeType.getMimojiUrl()))
+      .toList();
 
   /*
       final String title;
@@ -113,6 +138,7 @@ class DummyGenerate<T> {
 
 class _FakeType {
   static final _FakeType _instnace = _FakeType._internal();
+
   factory _FakeType() {
     return _instnace;
   }
@@ -185,7 +211,11 @@ class _FakeType {
 
   DateTime time() => _legacyFaker.date
       .dateTime(minYear: DateTime.now().year - 1, maxYear: DateTime.now().year);
-  String companyName() => _faker.company.let((e) => '${name()} ${e.companySuffix()}');
+
+  String companyName() =>
+      _faker.company.let((e) => '${name()} ${e.companySuffix()}');
+
   double rate() => _legacyFaker.randomGenerator.decimal(min: -10, scale: 100);
+
   int number() => Random.secure().nextInt(1000);
 }

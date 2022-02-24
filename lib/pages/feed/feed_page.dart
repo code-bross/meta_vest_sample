@@ -7,6 +7,8 @@ import 'package:meta_vest_sample/data/view/model/feed_model.dart';
 import 'package:meta_vest_sample/pages/feed/feed_controller.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+import '../../routes/app_pages.dart';
+
 class FeedPage extends StatelessWidget {
   const FeedPage({Key? key}) : super(key: key);
 
@@ -85,14 +87,14 @@ class Feed extends StatelessWidget {
                 Column(
                   children: [
                     Image.network(
-                        "https://w.namu.la/s/c9b951140de72f66425f2f5523cd2a4aa0a796a5c67e4c8363782e249d58f9d4fbbd977b1c6fd8d0fcecf5ee70a146619ee15c502a074c547f931384a97d69e545c812a594659981193b546f627eedae"),
+                        "https://image.zdnet.co.kr/2019/08/29/kunst_xUaEyIC8hMTU6t.jpg"),
                     SizedBox(
                         width: double.infinity,
                         height: 32,
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                            '잃었습니까? 휴먼',
+                            'NEO의 투자 엿보기',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           color: Colors.black45,
@@ -124,7 +126,7 @@ class Feed extends StatelessWidget {
                     onPressed: () {
                       navigateToMyRoom();
                     },
-                    child: Text('AI 투자 따라하기'))
+                    child: Text('NEO 투자 따라하기'))
               ],
             ),
           ))
@@ -202,11 +204,11 @@ class Feed extends StatelessWidget {
                         "https://images.chosun.com/resizer/S0GjYiA3S5hfvJK8UglVnB2b0To=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/KVU7FBR2Y4R7RPBH5HWZXK4R6U.jpg"),
                     SizedBox(
                         width: double.infinity,
-                        height: 32,
+                        height: 40,
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                            '오너 리스크 멸공발언!',
+                            '오너 리스크 멸공발언!\n베어들의 생각은?',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           color: Colors.black45,
@@ -216,10 +218,8 @@ class Feed extends StatelessWidget {
                 SizedBox(
                   height: 120,
                   child: PieChart(
-                      dataMap: {
-                        '신세계': 1000,
-                        '이마트': 500
-                      },
+                      colorList: const [Colors.red, Colors.blue],
+                      dataMap: {'상승 한다': 1000, '하락 한다': 500},
                       chartValuesOptions: ChartValuesOptions(
                           showChartValuesInPercentage: true,
                           chartValueBackgroundColor: Colors.transparent,
@@ -230,14 +230,14 @@ class Feed extends StatelessWidget {
                           ))),
                 ),
                 Text(
-                  '수익률 -12%',
+                  '주가 -12%',
                   style: TextStyle(color: Colors.blue, fontSize: 16),
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      navigateToMyRoom();
+                      Get.toNamed(Routes.Vote);
                     },
-                    child: Text('시장가 매도'))
+                    child: Text('투표하러 가기'))
               ],
             ),
           ))
