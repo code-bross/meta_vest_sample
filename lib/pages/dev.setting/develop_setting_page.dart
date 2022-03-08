@@ -21,7 +21,12 @@ class DevelopSettingPage extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(Routes.Vote);
                   },
-                  child: Text('투표'))
+                  child: Text('투표')),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.TimeLine);
+                  },
+                  child: Text('타임라인'))
             ],
           ),
         )),

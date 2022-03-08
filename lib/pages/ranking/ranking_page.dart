@@ -165,6 +165,11 @@ class _Chart extends StatelessWidget {
                         showChartValuesInPercentage: true,
                         chartValueBackgroundColor: Colors.transparent,
                         showChartValuesOutside: false,
+                          chartValueStyle: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          )
                       ),
                       legendOptions: LegendOptions(
                           showLegendsInRow: false, showLegends: false),
