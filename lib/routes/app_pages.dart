@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:meta_vest_sample/pages/dev.setting/branch/branch_binding.dart';
+import 'package:meta_vest_sample/pages/dev.setting/branch/branch_page.dart';
 import 'package:meta_vest_sample/pages/dev.setting/develop_setting_binding.dart';
 import 'package:meta_vest_sample/pages/dev.setting/develop_setting_page.dart';
 import 'package:meta_vest_sample/pages/dev.setting/timeline/time_line_binding.dart';
@@ -23,6 +25,7 @@ abstract class Routes {
   static const String Vote = '/vote';
   static const String DevelopSetting = '/develop-setting';
   static const String TimeLine = '/time-line';
+  static const String Branch = '/branch';
 }
 
 class AppPages {
@@ -55,5 +58,9 @@ class AppPages {
         name: Routes.TimeLine,
         page: () => const TimeLinePage(),
         binding: TimeLineBinding()),
+    GetPage(
+        name: Routes.Branch,
+        page: () => const BranchPage(),
+        binding: BranchBinding()),
   ];
 }

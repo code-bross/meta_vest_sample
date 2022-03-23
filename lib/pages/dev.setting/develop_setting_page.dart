@@ -26,7 +26,12 @@ class DevelopSettingPage extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(Routes.TimeLine);
                   },
-                  child: Text('타임라인'))
+                  child: Text('타임라인')),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.Branch);
+                  },
+                  child: Text('브랜치'))
             ],
           ),
         )),

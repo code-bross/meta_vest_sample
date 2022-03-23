@@ -53,9 +53,11 @@ dependencies:
   kt_dart: ^0.10.0
   polls: ^1.0.1
   comment_box: ^0.0.17
-  nb_utils: ^4.4.12
+  nb_utils: ^4.4.14
   timeline_list: ^0.0.6
   chat_bubbles: ^1.2.0
+  timelines: ^0.1.0
+  intl: ^0.17.0
 #  alice: ^0.2.5
 
 dev_dependencies:
