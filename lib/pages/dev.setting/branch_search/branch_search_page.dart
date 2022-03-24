@@ -141,9 +141,6 @@ class BranchSearchPage extends StatelessWidget {
   Widget build(context) {
     return GetBuilder<BranchSearchController>(
         builder: (controller) => Scaffold(
-              appBar: AppBar(
-                title: Text('브랜치'),
-              ),
               body: _body(controller),
             ));
   }

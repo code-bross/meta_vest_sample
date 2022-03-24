@@ -31,9 +31,6 @@ class _PollView extends GetView<VoteController> {
   Widget build(BuildContext context) {
     return GetBuilder<VoteController>(builder: (controller) {
       return Scaffold(
-          appBar: AppBar(
-            title: Text('신세계 그룹'),
-          ),
           body: Padding(
             padding: EdgeInsets.all(16),
             child: SingleChildScrollView(
@@ -76,7 +73,10 @@ class _PollView extends GetView<VoteController> {
     if (!controller.isVoted) {
       return _voteYet();
     } else {
-      return _voted();
+      return Container(
+        margin: EdgeInsets.only(right: 8, left: 8),
+        child: _voted(),
+      );
     }
   }
 }
