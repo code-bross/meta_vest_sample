@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:kt_dart/collection.dart';
+import 'package:meta_vest_sample/pages/dev.setting/branch/branch_controller.dart';
 import 'package:meta_vest_sample/pages/dev.setting/branch_search/branch_search_controller.dart';
 
 import '../../../routes/app_pages.dart';
@@ -13,55 +15,17 @@ class BranchSearchPage extends StatelessWidget {
         TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
     TextStyle boldStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 
-    Widget searchCard(BranchSearchController controller, String title,
-        String timesAgo, bool isUp) {
-      return InkWell(
-          onTap: () => {Get.toNamed(Routes.Branch)},
-          child: Container(
-            padding: EdgeInsets.all(8),
-            margin: EdgeInsets.only(right: 8),
-            decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(8)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      title,
-                      style: boldStyle,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(timesAgo)
-                  ],
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text('#코스피'),
-                Text('새로운 글 10개'),
-                Row(
-                  children: [
-                    Text(isUp ? '상승우세' : '하락우세'),
-                    isUp
-                        ? Icon(
-                            Icons.arrow_drop_up_outlined,
-                            color: Colors.red,
-                          )
-                        : Icon(
-                            Icons.arrow_drop_down_outlined,
-                            color: Colors.blue,
-                          )
-                  ],
-                )
-              ],
-            ),
-          ));
-    }
+    Widget _latest(KtList<BranchLatestSearchModel> items) => SizedBox(
+          height: 105,
+          child: ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: items.size,
+              itemBuilder: (BuildContext context, int index) {
+                return _LatestSearch(items[index]);
+              }),
+        );
 
     return Container(
         margin: EdgeInsets.all(8),
@@ -73,12 +37,7 @@ class BranchSearchPage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(bottom: 8),
             ),
-            Row(
-              children: [
-                searchCard(controller, '셀트리온', '4분전', true),
-                searchCard(controller, '씨에스윈드', '5분전', false)
-              ],
-            ),
+            _latest(controller.items),
             SizedBox(
               height: 24,
             ),
@@ -143,5 +102,71 @@ class BranchSearchPage extends StatelessWidget {
         builder: (controller) => Scaffold(
               body: _body(controller),
             ));
+  }
+}
+
+class _LatestSearch extends StatelessWidget {
+  final BranchLatestSearchModel _model;
+
+  _LatestSearch(this._model);
+
+  TextStyle _titleTextStyle =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+  TextStyle _boldStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+
+  @override
+  Widget build(context) {
+    return GetBuilder<BranchSearchController>(
+        builder: (controller) => _widget());
+  }
+
+  Widget _widget() {
+    return InkWell(
+        onTap: () => {Get.toNamed(Routes.Branch)},
+        child: Container(
+          padding: EdgeInsets.all(8),
+          margin: EdgeInsets.only(right: 8),
+          decoration: BoxDecoration(
+              color: Colors.grey[300], borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    _model.title,
+                    style: _boldStyle,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(_model.timeString())
+                ],
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text(_model.tag),
+              Text('새로운 글 ${_model.newCount}개'),
+              Row(
+                children: [
+                  Text(_model.predictionType == PredictionType.Bull
+                      ? '상승우세'
+                      : '하락우세'),
+                  _model.predictionType == PredictionType.Bull
+                      ? Icon(
+                          Icons.arrow_drop_up_outlined,
+                          color: Colors.red,
+                        )
+                      : Icon(
+                          Icons.arrow_drop_down_outlined,
+                          color: Colors.blue,
+                        )
+                ],
+              )
+            ],
+          ),
+        ));
   }
 }

@@ -30,7 +30,7 @@ class RankingPage extends StatelessWidget {
     if (type == RankingType.PortpolioSubsribeCount) {
       return _Chart(model);
     } else {
-      return _Chracter(model);
+      return _Character(model);
     }
   }
 
@@ -261,10 +261,10 @@ class _CharacterBottom extends StatelessWidget {
   }
 }
 
-class _Chracter extends StatelessWidget {
+class _Character extends StatelessWidget {
   final RankingModel _model;
 
-  _Chracter(this._model);
+  _Character(this._model);
 
   @override
   Widget build(BuildContext context) {
