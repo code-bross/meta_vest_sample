@@ -3,57 +3,57 @@ import 'package:intl/intl.dart';
 import 'package:kt_dart/collection.dart';
 
 class BranchController extends GetxController {
-  KtMutableList<Feed> _items = KtMutableList.of(
-    Feed(
+  KtMutableList<BranchModel> _items = KtMutableList.of(
+    BranchModel(
         createdAt: DateTime.utc(2022, 2, 23, 14, 25),
         content: '씨에스윈드, 종속회사 ASM Industries 지분 추가 취득 결정',
-        header: Header(
+        header: BranchHeaderModel(
             contentType: ContentType.News,
             predictionType: PredictionType.Bear,
             tags: []),
         expand: false,
-        comment: Comment(
+        comment: BranchCommentModel(
             comment: '독자 경영권 확보했고, 제무제푶 상 매출 올라 갈것',
-            thumbsUpcount: 12,
+            thumbsUpCount: 12,
             commentCount: 6)),
-    Feed(
+    BranchModel(
         createdAt: DateTime.utc(2022, 2, 23, 14, 23),
         content: '전운에 씨에스윈드, 부각되네.....',
-        header: Header(
+        header: BranchHeaderModel(
             contentType: ContentType.News,
             predictionType: PredictionType.Bear,
             tags: []),
         expand: false,
         comment: null),
-    Feed(
+    BranchModel(
         createdAt: DateTime.utc(2022, 2, 23, 14, 21),
         content: '러시아 리스크 풍력주 기회',
-        header: Header(
+        header: BranchHeaderModel(
             contentType: ContentType.ForeignNews,
             predictionType: PredictionType.Bull,
             tags: []),
         expand: false,
         comment: null),
-    Feed(
+    BranchModel(
         createdAt: DateTime.utc(2022, 2, 22, 11, 09),
         content: '평단 5.6 주주입니다. 상방으로 가려면...',
-        header: Header(
+        header: BranchHeaderModel(
             contentType: ContentType.Comment,
             predictionType: PredictionType.Bull,
             tags: ['#주주인증']),
         expand: false,
-        comment: Comment(
+        comment: BranchCommentModel(
             comment:
             '거래량은 한 번 터져야 된다고 생각합니다.\n몇 달 째 연이은 하락으로 조금씩 매수를 해나가고 있습니다.',
-            thumbsUpcount: 12,
+            thumbsUpCount: 12,
             commentCount: 6)),
   );
 
-  KtList<Feed> get items {
+  KtList<BranchModel> get items {
     return _items;
   }
 
-  KtMap<String, KtList<Feed>> get group {
+  KtMap<String, KtList<BranchModel>> get group {
     return items
         .sortedByDescending((p0) => p0.createdAt)
         .groupBy((it) => '${it.createdAt.month}/${it.createdAt.day}');
@@ -64,92 +64,38 @@ class BranchController extends GetxController {
     super.onInit();
   }
 
-  void expand(int parentIndex, Feed feed) {
+  void expand(int parentIndex, BranchModel feed) {
     var index = items.indexOf(feed);
     _items[index] = feed.copyWith(expand: !feed.expand);
     update();
   }
 
   void add() {
-    _items.add(Feed(
+    _items.add(BranchModel(
         createdAt: DateTime.now(),
         content: '아이템 추가',
-        header: Header(
+        header: BranchHeaderModel(
             contentType: ContentType.Comment,
             predictionType: PredictionType.Bear,
             tags: []),
         expand: false,
-        comment: Comment(comment: '추가', thumbsUpcount: 12, commentCount: 6)));
+        comment: BranchCommentModel(comment: '추가', thumbsUpCount: 12, commentCount: 6)));
     update();
   }
 }
 
-class Content {
-  final String title;
-  final List<Feed> feeds;
-
-//<editor-fold desc="Data Methods">
-
-  const Content({
-    required this.title,
-    required this.feeds,
-  });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          (other is Content &&
-              runtimeType == other.runtimeType &&
-              title == other.title &&
-              feeds == other.feeds);
-
-  @override
-  int get hashCode => title.hashCode ^ feeds.hashCode;
-
-  @override
-  String toString() {
-    return 'Content{' + ' title: $title,' + ' messages: $feeds,' + '}';
-  }
-
-  Content copyWith({
-    String? title,
-    List<Feed>? messages,
-  }) {
-    return Content(
-      title: title ?? this.title,
-      feeds: messages ?? this.feeds,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'title': this.title,
-      'messages': this.feeds,
-    };
-  }
-
-  factory Content.fromMap(Map<String, dynamic> map) {
-    return Content(
-      title: map['title'] as String,
-      feeds: map['messages'] as List<Feed>,
-    );
-  }
-
-//</editor-fold>
-}
-
-class Feed {
+class BranchModel {
   final DateTime createdAt; // final DateTime createdAt;
   final String content;
-  final Header header;
+  final BranchHeaderModel header;
   final bool expand;
-  final Comment? comment;
+  final BranchCommentModel? comment;
 
   String timeString() => DateFormat('HH:mm').format(createdAt);
 
 //<editor-fold desc="Data Methods">
 
-  const Feed({
+  const BranchModel({
     required this.createdAt,
     required this.content,
     required this.header,
@@ -160,7 +106,7 @@ class Feed {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          (other is Feed &&
+          (other is BranchModel &&
               runtimeType == other.runtimeType &&
               createdAt == other.createdAt &&
               content == other.content &&
@@ -178,7 +124,7 @@ class Feed {
 
   @override
   String toString() {
-    return 'Feed{' +
+    return 'BranchModel{' +
         ' createdAt: $createdAt,' +
         ' content: $content,' +
         ' header: $header,' +
@@ -187,14 +133,14 @@ class Feed {
         '}';
   }
 
-  Feed copyWith({
+  BranchModel copyWith({
     DateTime? createdAt,
     String? content,
-    Header? header,
+    BranchHeaderModel? header,
     bool? expand,
-    Comment? comment,
+    BranchCommentModel? comment,
   }) {
-    return Feed(
+    return BranchModel(
       createdAt: createdAt ?? this.createdAt,
       content: content ?? this.content,
       header: header ?? this.header,
@@ -205,35 +151,35 @@ class Feed {
 
   Map<String, dynamic> toMap() {
     return {
-      'createdAt': this.createdAt,
-      'content': this.content,
-      'header': this.header,
-      'expand': this.expand,
-      'comment': this.comment,
+      'createdAt': createdAt,
+      'content': content,
+      'header': header,
+      'expand': expand,
+      'comment': comment,
     };
   }
 
-  factory Feed.fromMap(Map<String, dynamic> map) {
-    return Feed(
+  factory BranchModel.fromMap(Map<String, dynamic> map) {
+    return BranchModel(
       createdAt: map['createdAt'] as DateTime,
       content: map['content'] as String,
-      header: map['header'] as Header,
+      header: map['header'] as BranchHeaderModel,
       expand: map['expand'] as bool,
-      comment: map['comment'] as Comment,
+      comment: map['comment'] as BranchCommentModel,
     );
   }
 
 //</editor-fold>
 }
 
-class Header {
+class BranchHeaderModel {
   final ContentType contentType;
   final PredictionType predictionType;
   final List<String> tags;
 
 //<editor-fold desc="Data Methods">
 
-  const Header({
+  const BranchHeaderModel({
     required this.contentType,
     required this.predictionType,
     required this.tags,
@@ -242,7 +188,7 @@ class Header {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          (other is Header &&
+          (other is BranchHeaderModel &&
               runtimeType == other.runtimeType &&
               contentType == other.contentType &&
               predictionType == other.predictionType &&
@@ -256,20 +202,20 @@ class Header {
 
   @override
   String toString() {
-    return 'Header{' +
+    return 'BranchHeaderModel{' +
         ' contentType: $contentType,' +
         ' predictionType: $predictionType,' +
         ' tags: $tags,' +
         '}';
   }
 
-  Header copyWith({
+  BranchHeaderModel copyWith({
     String? title,
     ContentType? contentType,
     PredictionType? predictionType,
     List<String>? tags,
   }) {
-    return Header(
+    return BranchHeaderModel(
       contentType: contentType ?? this.contentType,
       predictionType: predictionType ?? this.predictionType,
       tags: tags ?? this.tags,
@@ -284,8 +230,8 @@ class Header {
     };
   }
 
-  factory Header.fromMap(Map<String, dynamic> map) {
-    return Header(
+  factory BranchHeaderModel.fromMap(Map<String, dynamic> map) {
+    return BranchHeaderModel(
       contentType: map['contentType'] as ContentType,
       predictionType: map['predictionType'] as PredictionType,
       tags: map['tags'] as List<String>,
@@ -295,50 +241,50 @@ class Header {
 //</editor-fold>
 }
 
-class Comment {
+class BranchCommentModel {
   final String comment;
   final int commentCount;
-  final int thumbsUpcount;
+  final int thumbsUpCount;
 
 //<editor-fold desc="Data Methods">
 
-  const Comment({
+  const BranchCommentModel({
     required this.comment,
     required this.commentCount,
-    required this.thumbsUpcount,
+    required this.thumbsUpCount,
   });
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          (other is Comment &&
+          (other is BranchCommentModel &&
               runtimeType == other.runtimeType &&
               comment == other.comment &&
               commentCount == other.commentCount &&
-              thumbsUpcount == other.thumbsUpcount);
+              thumbsUpCount == other.thumbsUpCount);
 
   @override
   int get hashCode =>
-      comment.hashCode ^ commentCount.hashCode ^ thumbsUpcount.hashCode;
+      comment.hashCode ^ commentCount.hashCode ^ thumbsUpCount.hashCode;
 
   @override
   String toString() {
-    return 'Comment{' +
+    return 'BranchCommentModel{' +
         ' comment: $comment,' +
         ' commentCount: $commentCount,' +
-        ' thumbsUpcount: $thumbsUpcount,' +
+        ' thumbsUpCount: $thumbsUpCount,' +
         '}';
   }
 
-  Comment copyWith({
+  BranchCommentModel copyWith({
     String? comment,
     int? commentCount,
-    int? thumbsUpcount,
+    int? thumbsUpCount,
   }) {
-    return Comment(
+    return BranchCommentModel(
       comment: comment ?? this.comment,
       commentCount: commentCount ?? this.commentCount,
-      thumbsUpcount: thumbsUpcount ?? this.thumbsUpcount,
+      thumbsUpCount: thumbsUpCount ?? this.thumbsUpCount,
     );
   }
 
@@ -346,15 +292,15 @@ class Comment {
     return {
       'comment': this.comment,
       'commentCount': this.commentCount,
-      'thumbsUpcount': this.thumbsUpcount,
+      'thumbsUpCount': this.thumbsUpCount,
     };
   }
 
-  factory Comment.fromMap(Map<String, dynamic> map) {
-    return Comment(
+  factory BranchCommentModel.fromMap(Map<String, dynamic> map) {
+    return BranchCommentModel(
       comment: map['comment'] as String,
       commentCount: map['commentCount'] as int,
-      thumbsUpcount: map['thumbsUpcount'] as int,
+      thumbsUpCount: map['thumbsUpCount'] as int,
     );
   }
 

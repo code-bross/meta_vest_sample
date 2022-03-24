@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -9,12 +10,12 @@ import 'package:timelines/timelines.dart';
 class BranchPage extends StatelessWidget {
   const BranchPage({Key? key}) : super(key: key);
 
-  Widget _body(BuildContext context, KtMap<String, KtList<Feed>> map) {
+  Widget _body(BuildContext context, KtMap<String, KtList<BranchModel>> map) {
     return SingleChildScrollView(
         child: FixedTimeline.tileBuilder(
             theme: TimelineThemeData(
               nodePosition: 0,
-              color: Color(0xff989898),
+              color: Colors.black,
               indicatorTheme: IndicatorThemeData(
                 position: 0,
                 size: 20.0,
@@ -35,11 +36,15 @@ class BranchPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          key,
-                          style: TextStyle(
-                              color: Colors.white,
-                              backgroundColor: Colors.black),
+                        Container(
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(4)),
+                          child: Text(
+                            key,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                         _InnerTimeline(
                             parentIndex: index,
@@ -74,7 +79,7 @@ class _InnerTimeline extends StatelessWidget {
 
   final int parentIndex;
 
-  final KtList<Feed> feeds;
+  final KtList<BranchModel> feeds;
 
   @override
   Widget build(BuildContext context) {
@@ -135,19 +140,19 @@ class _InnerTimeline extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.black,
-                                  ),
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8)),
                                   margin: EdgeInsets.only(left: 4),
                                   padding: EdgeInsets.all(4),
                                 )
                               : Container(
                                   child: Text(feed.header.contentType.name),
                                   decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.black,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8)),
                                   margin: EdgeInsets.only(left: 4),
                                   padding: EdgeInsets.all(4),
                                 ),
@@ -210,7 +215,7 @@ class _InnerTimeline extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Icon(Icons.thumb_up_alt_outlined),
-                                        Text(feed.comment?.thumbsUpcount
+                                        Text(feed.comment?.thumbsUpCount
                                                 .toString() ??
                                             ''),
                                         Icon(
