@@ -8,7 +8,6 @@ class BranchController extends GetxController {
         createdAt: DateTime.utc(2022, 2, 23, 14, 25),
         content: '씨에스윈드, 종속회사 ASM Industries 지분 추가 취득 결정',
         header: Header(
-            title: '국내뉴스',
             contentType: ContentType.News,
             predictionType: PredictionType.Bear,
             tags: []),
@@ -21,7 +20,6 @@ class BranchController extends GetxController {
         createdAt: DateTime.utc(2022, 2, 23, 14, 23),
         content: '전운에 씨에스윈드, 부각되네.....',
         header: Header(
-            title: '국내뉴스',
             contentType: ContentType.News,
             predictionType: PredictionType.Bear,
             tags: []),
@@ -31,8 +29,7 @@ class BranchController extends GetxController {
         createdAt: DateTime.utc(2022, 2, 23, 14, 21),
         content: '러시아 리스크 풍력주 기회',
         header: Header(
-            title: '해외뉴스',
-            contentType: ContentType.News,
+            contentType: ContentType.ForeignNews,
             predictionType: PredictionType.Bull,
             tags: []),
         expand: false,
@@ -41,14 +38,13 @@ class BranchController extends GetxController {
         createdAt: DateTime.utc(2022, 2, 22, 11, 09),
         content: '평단 5.6 주주입니다. 상방으로 가려면...',
         header: Header(
-            title: '코멘트',
             contentType: ContentType.Comment,
             predictionType: PredictionType.Bull,
             tags: ['#주주인증']),
         expand: false,
         comment: Comment(
             comment:
-                '거래량은 한 번 터져야 된다고 생각합니다.\n몇 달 째 연이은 하락으로 조금씩 매수를 해나가고 있습니다.',
+            '거래량은 한 번 터져야 된다고 생각합니다.\n몇 달 째 연이은 하락으로 조금씩 매수를 해나가고 있습니다.',
             thumbsUpcount: 12,
             commentCount: 6)),
   );
@@ -79,8 +75,7 @@ class BranchController extends GetxController {
         createdAt: DateTime.now(),
         content: '아이템 추가',
         header: Header(
-            title: '국내뉴스',
-            contentType: ContentType.News,
+            contentType: ContentType.Comment,
             predictionType: PredictionType.Bear,
             tags: []),
         expand: false,
@@ -103,10 +98,10 @@ class Content {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Content &&
-          runtimeType == other.runtimeType &&
-          title == other.title &&
-          feeds == other.feeds);
+          (other is Content &&
+              runtimeType == other.runtimeType &&
+              title == other.title &&
+              feeds == other.feeds);
 
   @override
   int get hashCode => title.hashCode ^ feeds.hashCode;
@@ -165,13 +160,13 @@ class Feed {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Feed &&
-          runtimeType == other.runtimeType &&
-          createdAt == other.createdAt &&
-          content == other.content &&
-          header == other.header &&
-          expand == other.expand &&
-          comment == other.comment);
+          (other is Feed &&
+              runtimeType == other.runtimeType &&
+              createdAt == other.createdAt &&
+              content == other.content &&
+              header == other.header &&
+              expand == other.expand &&
+              comment == other.comment);
 
   @override
   int get hashCode =>
@@ -232,7 +227,6 @@ class Feed {
 }
 
 class Header {
-  final String title;
   final ContentType contentType;
   final PredictionType predictionType;
   final List<String> tags;
@@ -240,7 +234,6 @@ class Header {
 //<editor-fold desc="Data Methods">
 
   const Header({
-    required this.title,
     required this.contentType,
     required this.predictionType,
     required this.tags,
@@ -249,16 +242,14 @@ class Header {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Header &&
-          runtimeType == other.runtimeType &&
-          title == other.title &&
-          contentType == other.contentType &&
-          predictionType == other.predictionType &&
-          tags == other.tags);
+          (other is Header &&
+              runtimeType == other.runtimeType &&
+              contentType == other.contentType &&
+              predictionType == other.predictionType &&
+              tags == other.tags);
 
   @override
   int get hashCode =>
-      title.hashCode ^
       contentType.hashCode ^
       predictionType.hashCode ^
       tags.hashCode;
@@ -266,7 +257,6 @@ class Header {
   @override
   String toString() {
     return 'Header{' +
-        ' title: $title,' +
         ' contentType: $contentType,' +
         ' predictionType: $predictionType,' +
         ' tags: $tags,' +
@@ -280,7 +270,6 @@ class Header {
     List<String>? tags,
   }) {
     return Header(
-      title: title ?? this.title,
       contentType: contentType ?? this.contentType,
       predictionType: predictionType ?? this.predictionType,
       tags: tags ?? this.tags,
@@ -289,7 +278,6 @@ class Header {
 
   Map<String, dynamic> toMap() {
     return {
-      'title': this.title,
       'contentType': this.contentType,
       'predictionType': this.predictionType,
       'tags': this.tags,
@@ -298,7 +286,6 @@ class Header {
 
   factory Header.fromMap(Map<String, dynamic> map) {
     return Header(
-      title: map['title'] as String,
       contentType: map['contentType'] as ContentType,
       predictionType: map['predictionType'] as PredictionType,
       tags: map['tags'] as List<String>,
@@ -324,11 +311,11 @@ class Comment {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Comment &&
-          runtimeType == other.runtimeType &&
-          comment == other.comment &&
-          commentCount == other.commentCount &&
-          thumbsUpcount == other.thumbsUpcount);
+          (other is Comment &&
+              runtimeType == other.runtimeType &&
+              comment == other.comment &&
+              commentCount == other.commentCount &&
+              thumbsUpcount == other.thumbsUpcount);
 
   @override
   int get hashCode =>
@@ -376,4 +363,23 @@ class Comment {
 
 enum PredictionType { Bull, Bear }
 
-enum ContentType { News, Comment }
+enum ContentType {
+  News, Comment, ForeignNews
+}
+
+
+extension ContentTypeExtension on ContentType {
+
+  String get name {
+    switch (this) {
+      case ContentType.News:
+        return '국내 뉴스';
+      case ContentType.ForeignNews:
+        return '해외 뉴스';
+      case ContentType.Comment:
+        return '코멘트';
+      default:
+        return '';
+    }
+  }
+}

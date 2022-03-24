@@ -60,9 +60,7 @@ class BranchPage extends StatelessWidget {
               body: _body(context, controller.group),
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add),
-                onPressed: ()=>{
-                    controller.add()
-                },
+                onPressed: () => {controller.add()},
               ),
             ));
   }
@@ -133,7 +131,7 @@ class _InnerTimeline extends StatelessWidget {
                           feed.header.contentType == ContentType.Comment
                               ? Container(
                                   child: Text(
-                                    feed.header.title,
+                                    feed.header.contentType.name,
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   decoration: BoxDecoration(
@@ -143,7 +141,7 @@ class _InnerTimeline extends StatelessWidget {
                                   padding: EdgeInsets.all(4),
                                 )
                               : Container(
-                                  child: Text(feed.header.title),
+                                  child: Text(feed.header.contentType.name),
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                       width: 1,
@@ -155,12 +153,12 @@ class _InnerTimeline extends StatelessWidget {
                                 ),
                           feed.header.predictionType == PredictionType.Bear
                               ? Icon(
-                                  Icons.arrow_drop_up,
-                                  color: Colors.red,
-                                )
-                              : Icon(
                                   Icons.arrow_drop_down,
                                   color: Colors.blue,
+                                )
+                              : Icon(
+                                  Icons.arrow_drop_up,
+                                  color: Colors.red,
                                 ),
                           feed.header.tags.isNotEmpty
                               ? Row(
