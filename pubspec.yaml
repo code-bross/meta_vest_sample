@@ -58,6 +58,9 @@ dependencies:
   chat_bubbles: ^1.2.0
   timelines: ^0.1.0
   intl: ^0.17.0
+  emojis: ^0.9.9
+  kotlin_flavor: ^0.2.0
+  collection: ^1.15.0
 #  alice: ^0.2.5
 
 dev_dependencies:
