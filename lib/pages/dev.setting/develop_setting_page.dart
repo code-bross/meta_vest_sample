@@ -29,7 +29,7 @@ class DevelopSettingPage extends StatelessWidget {
                   child: Text('타임라인')),
               ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(Routes.Branch);
+                    Get.toNamed(Routes.BranchSearch);
                   },
                   child: Text('브랜치'))
             ],

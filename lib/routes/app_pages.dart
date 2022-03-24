@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:meta_vest_sample/pages/dev.setting/branch/branch_binding.dart';
 import 'package:meta_vest_sample/pages/dev.setting/branch/branch_page.dart';
+import 'package:meta_vest_sample/pages/dev.setting/branch_search/branch_search_binding.dart';
 import 'package:meta_vest_sample/pages/dev.setting/develop_setting_binding.dart';
 import 'package:meta_vest_sample/pages/dev.setting/develop_setting_page.dart';
 import 'package:meta_vest_sample/pages/dev.setting/timeline/time_line_binding.dart';
@@ -16,6 +17,8 @@ import 'package:meta_vest_sample/pages/ranking/ranking_page.dart';
 import 'package:meta_vest_sample/pages/vote/vote_binding.dart';
 import 'package:meta_vest_sample/pages/vote/vote_page.dart';
 
+import '../pages/dev.setting/branch_search/branch_search_page.dart';
+
 abstract class Routes {
   static const String Home = '/home';
   static const String Feed = '/feed';
@@ -26,6 +29,7 @@ abstract class Routes {
   static const String DevelopSetting = '/develop-setting';
   static const String TimeLine = '/time-line';
   static const String Branch = '/branch';
+  static const String BranchSearch = '/branch-search';
 }
 
 class AppPages {
@@ -62,5 +66,9 @@ class AppPages {
         name: Routes.Branch,
         page: () => const BranchPage(),
         binding: BranchBinding()),
+    GetPage(
+        name: Routes.BranchSearch,
+        page: () => const BranchSearchPage(),
+        binding: BranchSearchBinding()),
   ];
 }
