@@ -196,7 +196,7 @@ class _InnerTimeline extends StatelessWidget {
                                     padding: EdgeInsets.all(8),
                                     margin: EdgeInsets.only(top: 4, right: 8),
                                     decoration: BoxDecoration(
-                                        color: Colors.grey,
+                                        color: Colors.grey[300],
                                         borderRadius: BorderRadius.circular(8)),
                                     child: Container(
                                       child: Text(
