@@ -26,7 +26,7 @@ class VoteController extends GetxController {
 
   void choice(int index) {
     var newItem = items[index - 1].copyWith(value: items[index - 1].value + 1);
-    _items?.insert(index - 1, newItem);
+    _items?[index - 1] = newItem;
     isVoted = true;
     update();
   }

@@ -74,7 +74,7 @@ class _PollView extends GetView<VoteController> {
       return _voteYet();
     } else {
       return Container(
-        margin: EdgeInsets.only(right: 8, left: 8),
+        margin: EdgeInsets.only(right: 8, left: 8,),
         child: _voted(),
       );
     }
