@@ -13,12 +13,10 @@ class BranchSearchPage extends StatelessWidget {
         TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
     TextStyle boldStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 
-    Widget searchCard(
-        BranchSearchController controller, String title, String timesAgo) {
+    Widget searchCard(BranchSearchController controller, String title,
+        String timesAgo, bool isUp) {
       return InkWell(
-          onTap: () => {
-            Get.toNamed(Routes.Branch)
-          },
+          onTap: () => {Get.toNamed(Routes.Branch)},
           child: Container(
             padding: EdgeInsets.all(8),
             margin: EdgeInsets.only(right: 8),
@@ -48,11 +46,16 @@ class BranchSearchPage extends StatelessWidget {
                 Text('새로운 글 10개'),
                 Row(
                   children: [
-                    Text('하락우세'),
-                    Icon(
-                      Icons.arrow_drop_down_outlined,
-                      color: Colors.blue,
-                    )
+                    Text(isUp ? '상승우세' : '하락우세'),
+                    isUp
+                        ? Icon(
+                            Icons.arrow_drop_up_outlined,
+                            color: Colors.red,
+                          )
+                        : Icon(
+                            Icons.arrow_drop_down_outlined,
+                            color: Colors.blue,
+                          )
                   ],
                 )
               ],
@@ -72,8 +75,8 @@ class BranchSearchPage extends StatelessWidget {
             ),
             Row(
               children: [
-                searchCard(controller, '셀트리온', '4분전'),
-                searchCard(controller, '씨에스윈드', '5분전')
+                searchCard(controller, '셀트리온', '4분전', true),
+                searchCard(controller, '씨에스윈드', '5분전', false)
               ],
             ),
             SizedBox(
