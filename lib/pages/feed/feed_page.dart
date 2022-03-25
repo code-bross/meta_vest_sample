@@ -56,13 +56,13 @@ class Feed extends StatelessWidget {
           ],
         ),
       )),
-      onTap: () => _bottomSheet(),
+      onTap: () => _bottomSheet(context),
     );
   }
 
   void navigateToMyRoom() {}
 
-  void _bottomSheet() {
+  void _bottomSheet(BuildContext context) {
     switch (Random.secure().nextInt(3)) {
       case 0:
         _robotBottomSheet();
@@ -71,73 +71,71 @@ class Feed extends StatelessWidget {
         _birdBottomSheet();
         break;
       case 2:
-        _ownerRiskSheet();
+        _ownerRiskSheet(context);
         break;
     }
   }
 
   void _robotBottomSheet() {
     Get.bottomSheet(Wrap(children: [
-      ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 400),
+      SafeArea(
           child: Container(
-            color: Colors.white,
-            child: Column(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Column(
               children: [
-                Column(
-                  children: [
-                    Image.network(
-                        "https://image.zdnet.co.kr/2019/08/29/kunst_xUaEyIC8hMTU6t.jpg"),
-                    SizedBox(
-                        width: double.infinity,
-                        height: 32,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'NEO의 투자 엿보기',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                          color: Colors.black45,
-                        )),
-                  ],
-                ),
+                Image.network(
+                    "https://image.zdnet.co.kr/2019/08/29/kunst_xUaEyIC8hMTU6t.jpg"),
                 SizedBox(
-                  height: 120,
-                  child: PieChart(
-                      dataMap: {
-                        '신한 금융지주': 1000,
-                        '카카오': 500,
-                        '네이버': 200,
-                      },
-                      chartValuesOptions: ChartValuesOptions(
-                          showChartValuesInPercentage: true,
-                          chartValueBackgroundColor: Colors.transparent,
-                          chartValueStyle: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ))),
-                ),
-                Text(
-                  '수익률 1,236%',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      navigateToMyRoom();
-                    },
-                    child: Text('NEO 투자 따라하기'))
+                    width: double.infinity,
+                    height: 32,
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'NEO의 투자 엿보기',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      color: Colors.black45,
+                    )),
               ],
             ),
-          ))
+            SizedBox(
+              height: 120,
+              child: PieChart(
+                  dataMap: {
+                    '신한 금융지주': 1000,
+                    '카카오': 500,
+                    '네이버': 200,
+                  },
+                  chartValuesOptions: ChartValuesOptions(
+                      showChartValuesInPercentage: true,
+                      chartValueBackgroundColor: Colors.transparent,
+                      chartValueStyle: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ))),
+            ),
+            Text(
+              '수익률 1,236%',
+              style: TextStyle(color: Colors.red, fontSize: 16),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  navigateToMyRoom();
+                },
+                child: Text('NEO 투자 따라하기'))
+          ],
+        ),
+      ))
     ]));
   }
 
   void _birdBottomSheet() {
-    Get.bottomSheet(Wrap(children: [
-      ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 400),
-          child: Container(
+    Get.bottomSheet(
+        Wrap(children: [
+          Container(
             color: Colors.white,
             child: Column(
               children: [
@@ -186,62 +184,66 @@ class Feed extends StatelessWidget {
                     child: Text('고수의 투자 포트폴리오 보러가기'))
               ],
             ),
-          ))
-    ]));
+          )
+        ]),
+        isScrollControlled: true);
   }
 
-  void _ownerRiskSheet() {
-    Get.bottomSheet(Wrap(children: [
-      ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 400),
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    Image.network(
-                        "https://images.chosun.com/resizer/S0GjYiA3S5hfvJK8UglVnB2b0To=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/KVU7FBR2Y4R7RPBH5HWZXK4R6U.jpg"),
-                    SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '오너 리스크 멸공발언!\n베어들의 생각은?',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                          color: Colors.black45,
-                        )),
-                  ],
-                ),
-                SizedBox(
-                  height: 120,
-                  child: PieChart(
-                      colorList: const [Colors.red, Colors.blue],
-                      dataMap: {'상승 한다': 1000, '하락 한다': 500},
-                      chartValuesOptions: ChartValuesOptions(
-                          showChartValuesInPercentage: true,
-                          chartValueBackgroundColor: Colors.transparent,
-                          chartValueStyle: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ))),
-                ),
-                Text(
-                  '주가 -12%',
-                  style: TextStyle(color: Colors.blue, fontSize: 16),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(Routes.Vote);
-                    },
-                    child: Text('투표하러 가기'))
-              ],
-            ),
-          ))
-    ]));
+  void _ownerRiskSheet(BuildContext context) {
+    Get.bottomSheet(
+        Wrap(
+          children: [
+            Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Image.network(
+                          "https://images.chosun.com/resizer/S0GjYiA3S5hfvJK8UglVnB2b0To=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/KVU7FBR2Y4R7RPBH5HWZXK4R6U.jpg"),
+                      SizedBox(
+                          width: double.infinity,
+                          height: 40,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              '오너 리스크 멸공발언!\n베어들의 생각은?',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            color: Colors.black45,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 120,
+                    child: PieChart(
+                        colorList: const [Colors.red, Colors.blue],
+                        dataMap: {'상승 한다': 1000, '하락 한다': 500},
+                        chartValuesOptions: ChartValuesOptions(
+                            showChartValuesInPercentage: true,
+                            chartValueBackgroundColor: Colors.transparent,
+                            chartValueStyle: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ))),
+                  ),
+                  Text(
+                    '주가 -12%',
+                    style: TextStyle(color: Colors.blue, fontSize: 16),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.Vote);
+                      },
+                      child: Text('투표하러 가기'))
+                ],
+              ),
+            )
+          ],
+        ),
+        isScrollControlled: true);
   }
 }
 
@@ -307,7 +309,42 @@ class _ContentText extends StatelessWidget {
               _model.transaction,
               style: TextStyle(fontSize: 14, color: Colors.blueAccent),
               textAlign: TextAlign.start,
-            ))
+            )),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.thumb_up_alt_outlined),
+                SizedBox(
+                  width: 4,
+                ),
+                Text('좋아요')
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.chat_bubble_outline_outlined),
+                SizedBox(
+                  width: 4,
+                ),
+                Text('댓글 달기')
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.workspaces_outline),
+                SizedBox(
+                  width: 4,
+                ),
+                Text('브랜치')
+              ],
+            ),
+          ],
+        )
       ],
     ));
   }
@@ -322,6 +359,7 @@ class _Tag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(_text, maxLines: 1, style: _style, textAlign: TextAlign.start);
+    return Text('#$_text',
+        maxLines: 1, style: _style, textAlign: TextAlign.start);
   }
 }

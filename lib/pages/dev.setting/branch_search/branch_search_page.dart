@@ -50,17 +50,26 @@ class BranchSearchPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '국가 지수',
-                      style: boldStyle,
-                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '국가 지수',
+                          style: boldStyle,
+                        ),
+                        SizedBox(width: 10,),
+                        Text(
+                          '코스피 200 FnGuide- K-메타버스....'
+                        )
+                      ],
+                    )
+                    ,
                     Row(
                       children: [
                         Text('주식 종목', style: boldStyle),
                         SizedBox(
                           width: 12,
                         ),
-                        Text('삼성 에스디에스  신한지주  ')
+                        Text('삼성에스디에스 안랩 SK하이닉스')
                       ],
                     )
                   ],
@@ -69,7 +78,7 @@ class BranchSearchPage extends StatelessWidget {
               height: 24,
             ),
             Text(
-              '해외',
+              '기타',
               style: titleTextStyle,
             ),
             Container(
@@ -77,21 +86,23 @@ class BranchSearchPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '국가 지수',
-                      style: boldStyle,
-                    ),
                     Row(
                       children: [
-                        Text('주식 종목', style: boldStyle),
-                        SizedBox(
-                          width: 12,
+                        Text(
+                          '원자재',
+                          style: boldStyle,
                         ),
-                        Text('삼성 에스디에스  신한지주  ')
+                        SizedBox(width: 10,),
+                        Text(
+                            'WTI'
+                        )
                       ],
                     )
                   ],
                 )),
+            SizedBox(
+              height: 24,
+            ),
           ],
         ));
   }
@@ -127,7 +138,8 @@ class _LatestSearch extends StatelessWidget {
           padding: EdgeInsets.all(8),
           margin: EdgeInsets.only(right: 8),
           decoration: BoxDecoration(
-              color: Colors.grey[300], borderRadius: BorderRadius.circular(8)),
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(8)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
