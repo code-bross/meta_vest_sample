@@ -28,6 +28,7 @@ class BranchSearchController extends GetxController {
 
   @override
   void onInit() {
+    Intl.defaultLocale = 'ko';
     super.onInit();
   }
 }
